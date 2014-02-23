@@ -15,7 +15,9 @@ public class CareSnapMainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-
+		Intent i = new Intent(getApplicationContext(), CaptureActivity.class);
+		startActivity(i);
+		
 	}
 
 	@Override
