@@ -8,6 +8,9 @@
 package com.health.caresnap;
 
 public final class R {
+    public static final class array {
+        public static final int speciality_arrays=0x7f070000;
+    }
     public static final class attr {
     }
     public static final class dimen {
@@ -21,26 +24,47 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int button1=0x7f020000;
+        public static final int button1_small=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f050003;
-        public static final int button1=0x7f050002;
+        public static final int action_settings=0x7f05000a;
+        public static final int button1=0x7f050004;
         public static final int button_capture_main=0x7f050000;
-        public static final int text1=0x7f050001;
+        public static final int button_view_main=0x7f050001;
+        public static final int capture_create_impr=0x7f050009;
+        public static final int clinic_name=0x7f050008;
+        public static final int date_time_textview=0x7f050002;
+        public static final int doctor_name=0x7f050006;
+        public static final int speciality_spinner=0x7f050007;
+        public static final int text1=0x7f050003;
+        public static final int textView1=0x7f050005;
     }
     public static final class layout {
         public static final int activity_capture=0x7f030000;
         public static final int activity_care_snap_main=0x7f030001;
+        public static final int activity_create_impression=0x7f030002;
+        public static final int activity_impression=0x7f030003;
     }
     public static final class menu {
-        public static final int care_snap_main=0x7f080000;
+        public static final int capture_session=0x7f090000;
+        public static final int care_snap_main=0x7f090001;
+        public static final int create_impression=0x7f090002;
+        public static final int impression=0x7f090003;
     }
     public static final class string {
-        public static final int action_settings=0x7f060001;
-        public static final int app_name=0x7f060000;
-        public static final int capture=0x7f060002;
-        public static final int view=0x7f060003;
+        public static final int action_settings=0x7f060002;
+        public static final int app_name=0x7f060001;
+        public static final int capture=0x7f060003;
+        public static final int clinic_label=0x7f060009;
+        public static final int date_time=0x7f060006;
+        public static final int practitioner_label=0x7f060007;
+        public static final int speciality_prompt=0x7f06000a;
+        public static final int title_activity_create_impression=0x7f060008;
+        public static final int title_activity_impression=0x7f060005;
+        public static final int user_name=0x7f060000;
+        public static final int view=0x7f060004;
     }
     public static final class style {
         /** 
@@ -64,10 +88,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f080001;
     }
 }

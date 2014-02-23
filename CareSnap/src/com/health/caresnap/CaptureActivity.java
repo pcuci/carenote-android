@@ -2,6 +2,8 @@ package com.health.caresnap;
 
 import java.util.ArrayList;
 
+import com.health.caresnap.CaptureSessionGlobal.CaptureSessionState;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +30,8 @@ public class CaptureActivity extends Activity implements OnClickListener {
 		i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
 		try {
 			startActivityForResult(i, REQUEST_OK);
+
+			updateSessionState(CaptureSessionState.RECORDING);
 		} catch (Exception e) {
 			Toast.makeText(this, "Error initializing speech to text engine.",
 					Toast.LENGTH_LONG).show();
@@ -41,6 +45,13 @@ public class CaptureActivity extends Activity implements OnClickListener {
 			ArrayList<String> thingsYouSaid = data
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			((TextView) findViewById(R.id.text1)).setText(thingsYouSaid.get(0));
+
+			updateSessionState(CaptureSessionState.PAUSED);
 		}
+	}
+
+	private void updateSessionState(CaptureSessionState newState) {
+		CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
+		global.setSessionState(newState);
 	}
 }

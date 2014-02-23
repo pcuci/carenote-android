@@ -2,5 +2,8 @@
 <resources>
 
     <item type="id" name="button_capture_main" />
+    <item type="id" name="button_view_main" />
+    
+    <item type="id" name="date_time_textview" />
 
 </resources>
