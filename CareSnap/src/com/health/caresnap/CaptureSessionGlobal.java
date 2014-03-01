@@ -2,13 +2,14 @@ package com.health.caresnap;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.app.Application;
 import android.util.Log;
 
 public class CaptureSessionGlobal extends Application {
 	private String TAG = "SESSION_STATE";
 	private String recording;
-	private List impresions = new ArrayList<ImpressionEntry>();
+	private List<ImpressionEntry> impressions = new ArrayList<ImpressionEntry>();
 
 	public enum CaptureSessionState {
 		STARTING, PAUSED, RECORDING, FINISHED_RECORDING, STOPED, FINISHED, FINAL_SAVE
@@ -23,7 +24,6 @@ public class CaptureSessionGlobal extends Application {
 	public void setSessionState(CaptureSessionState sessionState) {
 		this.sessionState = sessionState;
 		Log.d(TAG, "SESSION STATE:" + sessionState);
-
 	}
 
 	public String getRecording() {
@@ -34,15 +34,15 @@ public class CaptureSessionGlobal extends Application {
 		this.recording = recording;
 	}
 
-	public List getImpresions() {
-		return impresions;
+	public List<ImpressionEntry> getImpresions() {
+		return impressions;
 	}
 
-	public void setImpresions(List impresions) {
-		this.impresions = impresions;
+	public void setImpresions(List<ImpressionEntry> impressions) {
+		this.impressions = impressions;
 	}
 
 	public void addImpression(ImpressionEntry impression) {
-		impresions.add(impression);
+		impressions.add(impression);
 	}
 }

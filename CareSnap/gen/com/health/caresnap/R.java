@@ -29,7 +29,7 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f05000c;
+        public static final int action_settings=0x7f05000d;
         public static final int button1=0x7f050004;
         public static final int button_capture_main=0x7f050000;
         public static final int button_view_main=0x7f050001;
@@ -42,12 +42,14 @@ public final class R {
         public static final int speciality_spinner=0x7f050008;
         public static final int text1=0x7f050003;
         public static final int textView1=0x7f050006;
+        public static final int viewImpressionsList=0x7f05000c;
     }
     public static final class layout {
         public static final int activity_capture=0x7f030000;
         public static final int activity_care_snap_main=0x7f030001;
         public static final int activity_create_impression=0x7f030002;
         public static final int activity_impression=0x7f030003;
+        public static final int activity_view_impression=0x7f030004;
     }
     public static final class menu {
         public static final int capture_session=0x7f090000;

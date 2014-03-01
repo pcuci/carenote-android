@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -28,6 +29,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String KEY_LOCATION = "location";
 	private static final String KEY_NOTE = "note";
 
+	private String TAG = "DATABASE";
+	
 	public DatabaseHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -40,6 +43,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ KEY_SPECIALTY + " TEXT," + KEY_LOCATION + " TEXT," + KEY_NOTE
 				+ " TEXT" + ")";
 		db.execSQL(CREATE_CONTACTS_TABLE);
+		Log.d(TAG, "Database created");
+		
 	}
 
 	// Upgrading database

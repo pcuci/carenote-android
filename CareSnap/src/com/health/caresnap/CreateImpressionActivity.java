@@ -81,11 +81,12 @@ public class CreateImpressionActivity extends Activity {
 		Log.d(TAG, "onResume");
 
 		CaptureSessionGlobal session = ((CaptureSessionGlobal) getApplicationContext());
-
-		if (session.getSessionState() == CaptureSessionState.STOPED) {
+		CaptureSessionGlobal.CaptureSessionState sessionState = session
+				.getSessionState();
+		if (sessionState == CaptureSessionState.STOPED) {
 			updateSessionState(CaptureSessionState.STARTING);
 
-		}
+		} 
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class CreateImpressionActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		Intent i = new Intent(getBaseContext(), CreateImpressionActivity.class);
+		Intent i = new Intent(getBaseContext(), CareSnapMainActivity.class);
 		startActivity(i);
 	}
 

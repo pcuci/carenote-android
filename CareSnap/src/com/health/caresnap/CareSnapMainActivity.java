@@ -7,24 +7,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 
-public class CareSnapMainActivity extends Activity implements OnClickListener {
+public class CareSnapMainActivity extends Activity {
 
-	@Override
-	public void onClick(View v) {
-		Intent intent = new Intent(this, CaptureActivity.class);
-		startActivity(intent);
-	}
+	private DatabaseHandler db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		dbSetup();
 		setContentView(R.layout.activity_care_snap_main);
-		findViewById(R.id.button_capture_main).setOnClickListener(this);
+		findViewById(R.id.button_capture_main).setOnClickListener(
+				new View.OnClickListener() {
 
-		DatabaseHandler db = new DatabaseHandler(this);
+					@Override
+					public void onClick(View arg0) {
 
+						Intent i = new Intent(getBaseContext(),
+								CreateImpressionActivity.class);
+						startActivity(i);
+					}
+				});
+		findViewById(R.id.button_view_main).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+
+						Intent i = new Intent(getBaseContext(),
+								CaptureActivity.class);
+						startActivity(i);
+					}
+				});
+	}
+
+	private void dbSetup() {
+		db = new DatabaseHandler(this);
 		/**
 		 * CRUD Operations
 		 * */

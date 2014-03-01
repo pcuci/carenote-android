@@ -33,6 +33,7 @@ public class CaptureActivity extends Activity implements OnClickListener {
 				Intent returnIntent = new Intent();
 				returnIntent.putExtra("impression", impresson);
 				setResult(RESULT_OK, returnIntent);
+				updateSessionState(CaptureSessionState.FINISHED_RECORDING);
 				finish();
 			}
 		});
