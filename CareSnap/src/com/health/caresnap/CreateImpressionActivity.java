@@ -3,41 +3,56 @@ package com.health.caresnap;
 import java.text.DateFormat;
 import java.util.Date;
 
-import com.health.caresnap.CaptureSessionGlobal.CaptureSessionState;
-
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.health.caresnap.CaptureSessionGlobal.CaptureSessionState;
 
 public class CreateImpressionActivity extends Activity {
 	private String dateTime;
 	private TextView dateTimeTextView;
 	private Handler handler = new Handler();
-
+	private String recordingText = "";
 	private Thread timeThread;
 	private String TAG = "CREATE_IMPRESSION";
+	private Button captureSaveButton;
+	private TextView nameTextView;
+	private Spinner specialityTextView;
+	private TextView hospitalTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_impression);
+		captureSaveButton = (Button) findViewById(R.id.capture_create_impr);
+		nameTextView = (TextView) findViewById(R.id.doctor_name);
+		specialityTextView = (Spinner) findViewById(R.id.speciality_spinner);
+		hospitalTextView = (TextView) findViewById(R.id.clinic_name);
+		captureSaveButton.setOnClickListener(new View.OnClickListener() {
 
-		findViewById(R.id.capture_create_impr).setOnClickListener(
-				new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
 
-					@Override
-					public void onClick(View arg0) {
+				CaptureSessionGlobal session = ((CaptureSessionGlobal) getApplicationContext());
+				if (session.getSessionState() == CaptureSessionState.PAUSED) {
+					updateSessionState(CaptureSessionState.FINAL_SAVE);
+				} else if (session.getSessionState() == CaptureSessionState.STOPED) {
+					captureSaveButton.setText("Capture");
+				} else if (session.getSessionState() == CaptureSessionState.STARTING) {
 
-						Intent i = new Intent(getBaseContext(),
-								CaptureActivity.class);
-						startActivity(i);
-					}
-				});
+					Intent i = new Intent(getBaseContext(),
+							CaptureActivity.class);
+					startActivityForResult(i, 1);
+				}
+			}
+		});
 		// get action bar
 		// ActionBar actionBar = getActionBar();
 		//
@@ -48,7 +63,7 @@ public class CreateImpressionActivity extends Activity {
 			public void run() {
 
 				dateTime = DateFormat.getDateTimeInstance().format(new Date());
-				dateTimeTextView.setText("Now is: " + dateTime);
+				dateTimeTextView.setText("Now is: \n" + dateTime);
 				Log.d(TAG, "local Thread sleeping");
 				handler.postDelayed(this, 1000);
 
@@ -70,8 +85,6 @@ public class CreateImpressionActivity extends Activity {
 		if (session.getSessionState() == CaptureSessionState.STOPED) {
 			updateSessionState(CaptureSessionState.STARTING);
 
-		} else if (session.getSessionState() == CaptureSessionState.FINISHED_RECORDING) {
-			updateSessionState(CaptureSessionState.FINAL_SAVE);
 		}
 	}
 
@@ -85,10 +98,34 @@ public class CreateImpressionActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
+		Intent i = new Intent(getBaseContext(), CreateImpressionActivity.class);
+		startActivity(i);
 	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == 1) {
+
+			if (resultCode == RESULT_OK) {
+				String recordingText = "";
+				recordingText += data.getStringExtra("impression");
+				captureSaveButton.setText("Save Impression/Plan");
+				ImpressionEntry impressionEntry = new ImpressionEntry(
+						String.valueOf(nameTextView.getText()),
+						String.valueOf(specialityTextView.getSelectedItem()),
+						String.valueOf(hospitalTextView.getText()),
+						recordingText, dateTime);
+				CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
+				global.addImpression(impressionEntry);
+			}
+			if (resultCode == RESULT_CANCELED) {
+			}
+		}
+	}// onActivityResult
 
 	private void updateSessionState(CaptureSessionState newState) {
 		CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
 		global.setSessionState(newState);
 	}
+
 }
