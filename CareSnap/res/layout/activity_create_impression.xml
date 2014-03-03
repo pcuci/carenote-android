@@ -13,15 +13,29 @@
         android:text="@string/date_time"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
-        android:id="@+id/doctor_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/practitioner_label"
-        android:textAppearance="?android:attr/textAppearanceLarge" >
-    </EditText>
+        android:layout_height="67dp" >
+
+        <TextView
+            android:id="@+id/doctor_name_label"
+            android:layout_width="297dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/practitioner_label"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/doctor_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
 
     <Spinner
         android:id="@+id/speciality_spinner"
@@ -31,17 +45,30 @@
         android:prompt="@string/speciality_prompt"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
-        android:id="@+id/clinic_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/clinic_label"
-        android:textAppearance="?android:attr/textAppearanceLarge" >
+        android:layout_height="64dp" >
 
-        <requestFocus />
-    </EditText>
+        <TextView
+            android:id="@+id/clinic_name_label"
+            android:layout_width="297dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/clinic_name_label"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/clinic_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/clinic_name"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"

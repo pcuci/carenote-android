@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 public class CaptureSessionGlobal extends Application {
 	private String TAG = "SESSION_STATE";
 	private String recording;
-	private List<ImpressionEntry> impressions = new ArrayList<ImpressionEntry>();
+	private DatabaseHandler databaseHandler;
 
 	public enum CaptureSessionState {
 		STARTING, PAUSED, RECORDING, FINISHED_RECORDING, STOPED, FINISHED, FINAL_SAVE
@@ -34,15 +35,16 @@ public class CaptureSessionGlobal extends Application {
 		this.recording = recording;
 	}
 
-	public List<ImpressionEntry> getImpresions() {
-		return impressions;
+	public void addImpression(Impression impression) {
+		databaseHandler.addImpression(impression);
 	}
 
-	public void setImpresions(List<ImpressionEntry> impressions) {
-		this.impressions = impressions;
+	public void setupDatabase(Context context) {
+		databaseHandler = new DatabaseHandler(context);
 	}
 
-	public void addImpression(ImpressionEntry impression) {
-		impressions.add(impression);
+	public List<Impression> getAllImpressions() {
+		return databaseHandler.getAllImpressions();
+
 	}
 }

@@ -29,20 +29,21 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f05000d;
+        public static final int action_settings=0x7f05000e;
         public static final int button1=0x7f050004;
         public static final int button_capture_main=0x7f050000;
         public static final int button_view_main=0x7f050001;
-        public static final int capture_create_impr=0x7f05000a;
-        public static final int clinic_name=0x7f050009;
+        public static final int capture_create_impr=0x7f05000c;
+        public static final int clinic_name=0x7f05000b;
+        public static final int clinic_name_label=0x7f05000a;
         public static final int date_time_textview=0x7f050002;
-        public static final int doctor_name=0x7f050007;
-        public static final int listView1=0x7f05000b;
+        public static final int doctor_name=0x7f050008;
+        public static final int doctor_name_label=0x7f050007;
+        public static final int listView1=0x7f05000d;
         public static final int save_capture_button=0x7f050005;
-        public static final int speciality_spinner=0x7f050008;
+        public static final int speciality_spinner=0x7f050009;
         public static final int text1=0x7f050003;
         public static final int textView1=0x7f050006;
-        public static final int viewImpressionsList=0x7f05000c;
     }
     public static final class layout {
         public static final int activity_capture=0x7f030000;
@@ -62,6 +63,7 @@ public final class R {
         public static final int app_name=0x7f060001;
         public static final int capture=0x7f060003;
         public static final int clinic_label=0x7f060009;
+        public static final int clinic_name_label=0x7f06000b;
         public static final int date_time=0x7f060006;
         public static final int practitioner_label=0x7f060007;
         public static final int speciality_prompt=0x7f06000a;

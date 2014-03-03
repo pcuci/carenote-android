@@ -25,5 +25,6 @@
         <item>Dermatology</item>
         <item>Psychologist</item>
     </string-array>
+    <string name="clinic_name_label">Clinic name:</string>
 
 </resources>

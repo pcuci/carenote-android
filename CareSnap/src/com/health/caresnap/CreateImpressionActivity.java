@@ -1,6 +1,8 @@
 package com.health.caresnap;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -62,9 +64,14 @@ public class CreateImpressionActivity extends Activity {
 		timeThread = new Thread() {
 			public void run() {
 
-				dateTime = DateFormat.getDateTimeInstance().format(new Date());
-				dateTimeTextView.setText("Now is: \n" + dateTime);
-				Log.d(TAG, "local Thread sleeping");
+				Calendar c = Calendar.getInstance();
+				Date date = c.getTime();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+
+				dateTime = sdf.format(date);
+				System.out
+						.println("CreateImpressionActivity.onCreate(...).new Thread() {...}.run("
+								+ dateTime + ")");
 				handler.postDelayed(this, 1000);
 
 			}
@@ -86,7 +93,7 @@ public class CreateImpressionActivity extends Activity {
 		if (sessionState == CaptureSessionState.STOPED) {
 			updateSessionState(CaptureSessionState.STARTING);
 
-		} 
+		}
 	}
 
 	@Override
@@ -111,13 +118,13 @@ public class CreateImpressionActivity extends Activity {
 				String recordingText = "";
 				recordingText += data.getStringExtra("impression");
 				captureSaveButton.setText("Save Impression/Plan");
-				ImpressionEntry impressionEntry = new ImpressionEntry(
+				Impression impression = new Impression(
 						String.valueOf(nameTextView.getText()),
 						String.valueOf(specialityTextView.getSelectedItem()),
 						String.valueOf(hospitalTextView.getText()),
 						recordingText, dateTime);
 				CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
-				global.addImpression(impressionEntry);
+				global.addImpression(impression);
 			}
 			if (resultCode == RESULT_CANCELED) {
 			}

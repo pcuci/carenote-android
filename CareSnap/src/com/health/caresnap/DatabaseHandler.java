@@ -28,9 +28,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String KEY_SPECIALTY = "specialty";
 	private static final String KEY_LOCATION = "location";
 	private static final String KEY_NOTE = "note";
+	private static final String KEY_TIME = "time";
 
 	private String TAG = "DATABASE";
-	
+
 	public DatabaseHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -41,10 +42,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_IMPRESSIONS
 				+ "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
 				+ KEY_SPECIALTY + " TEXT," + KEY_LOCATION + " TEXT," + KEY_NOTE
-				+ " TEXT" + ")";
+				+ " TEXT," + KEY_TIME + " TEXT" + ")";
 		db.execSQL(CREATE_CONTACTS_TABLE);
 		Log.d(TAG, "Database created");
-		
+
 	}
 
 	// Upgrading database
@@ -58,13 +59,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Adding new contact
-	public void addContact(Impression impression) {
+	public void addImpression(Impression impression) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, impression.getName()); // Contact Name
 		values.put(KEY_SPECIALTY, impression.getSpecialty()); // Contact Phone
-																// Number
+		values.put(KEY_LOCATION, impression.getLocation()); 		
+		values.put(KEY_NOTE, impression.getNote()); 			
+		values.put(KEY_TIME, impression.getTime()); 		
 
 		// Inserting Row
 		db.insert(TABLE_IMPRESSIONS, null, values);
@@ -77,25 +80,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(TABLE_IMPRESSIONS, new String[] { KEY_ID,
-				KEY_NAME, KEY_SPECIALTY, KEY_LOCATION, KEY_NOTE }, KEY_ID
-				+ "=?", new String[] { String.valueOf(id) }, null, null, null,
-				null);
+				KEY_NAME, KEY_SPECIALTY, KEY_LOCATION, KEY_NOTE, KEY_TIME },
+				KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null,
+				null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
 
 		Impression impression = new Impression(Integer.parseInt(cursor
 				.getString(0)), cursor.getString(1), cursor.getString(2),
-				cursor.getString(3), cursor.getString(4));
-		// return contact
+				cursor.getString(3), cursor.getString(4), cursor.getString(5));
 		return impression;
 	}
 
-	// Getting All Contacts
 	public List<Impression> getAllImpressions() {
 
 		List<Impression> impressionList = new ArrayList<Impression>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_IMPRESSIONS;
+		String selectQuery = "SELECT * FROM " + TABLE_IMPRESSIONS;
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -109,7 +110,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				impression.setSpecialty(cursor.getString(2));
 				impression.setLocation(cursor.getString(3));
 				impression.setNote(cursor.getString(4));
-				// Adding contact to list
+				impression.setTime(cursor.getString(5));
+
 				impressionList.add(impression);
 			} while (cursor.moveToNext());
 		}
@@ -138,8 +140,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, impression.getName());
 		values.put(KEY_SPECIALTY, impression.getSpecialty());
-		values.put(KEY_LOCATION, impression.getName());
-		values.put(KEY_NOTE, impression.getName());
+		values.put(KEY_LOCATION, impression.getLocation());
+		values.put(KEY_NOTE, impression.getNote());
+		values.put(KEY_TIME, impression.getTime());
 
 		// updating row
 		return db.update(TABLE_IMPRESSIONS, values, KEY_ID + " = ?",

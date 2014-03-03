@@ -3,34 +3,37 @@ package com.health.caresnap;
 public class Impression {
 
 	// private variables
-	int _id;
-	String _name;
-	String _specialty;
-	String _location;
-	String _note;
+	private int _id;
+	private String _name;
+	private String _specialty;
+	private String _location;
+	private String _note;
+	private String _time;
 
 	// Empty constructor
 	public Impression() {
 	}
 
 	// constructor
-	public Impression(int id, String name, String _specialty, String _location,
-			String _note) {
-		this._id = id;
-		this._name = name;
+	public Impression(int _id, String _name, String _specialty,
+			String _location, String _note, String _time) {
+		this._id = _id;
+		this._name = _name;
 		this._specialty = _specialty;
 		this._location = _location;
 		this._note = _note;
+		this._time = _time;
 
 	}
 
 	// constructor
 	public Impression(String name, String _specialty, String _location,
-			String _note) {
+			String _note, String _time) {
 		this._name = name;
 		this._specialty = _specialty;
 		this._location = _location;
 		this._note = _note;
+		this._time = _time;
 	}
 
 	// getting ID
@@ -71,11 +74,19 @@ public class Impression {
 	}
 
 	public String getNote() {
-		return _location;
+		return _note;
 	}
 
-	public void setNote(String _location) {
-		this._location = _location;
+	public void setNote(String _note) {
+		this._note = _note;
+	}
+
+	public String getTime() {
+		return _time;
+	}
+
+	public void setTime(String _time) {
+		this._time = _time;
 	}
 
 }
