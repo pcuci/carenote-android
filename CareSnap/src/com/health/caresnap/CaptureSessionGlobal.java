@@ -8,43 +8,50 @@ import android.content.Context;
 import android.util.Log;
 
 public class CaptureSessionGlobal extends Application {
-	private String TAG = "SESSION_STATE";
-	private String recording;
-	private DatabaseHandler databaseHandler;
+    private String TAG = "SESSION_STATE";
+    private String recording;
+    private DatabaseHandler databaseHandler;
 
-	public enum CaptureSessionState {
-		STARTING, PAUSED, RECORDING, FINISHED_RECORDING, STOPED, FINISHED, FINAL_SAVE
-	};
+    public enum CaptureSessionState {
+        STARTING,
+        PAUSED,
+        RECORDING,
+        FINISHED_RECORDING,
+        STOPPED,
+        FINISHED,
+        FINAL_SAVE
+    }
 
-	private CaptureSessionState sessionState = CaptureSessionState.STOPED;
+    ;
 
-	public CaptureSessionState getSessionState() {
-		return sessionState;
-	}
+    private CaptureSessionState sessionState = CaptureSessionState.STOPPED;
 
-	public void setSessionState(CaptureSessionState sessionState) {
-		this.sessionState = sessionState;
-		Log.d(TAG, "SESSION STATE:" + sessionState);
-	}
+    public CaptureSessionState getSessionState() {
+        return sessionState;
+    }
 
-	public String getRecording() {
-		return recording;
-	}
+    public void setSessionState(CaptureSessionState sessionState) {
+        this.sessionState = sessionState;
+        Log.d(TAG, "SESSION STATE:" + sessionState);
+    }
 
-	public void setRecording(String recording) {
-		this.recording = recording;
-	}
+    public String getRecording() {
+        return recording;
+    }
 
-	public void addImpression(Impression impression) {
-		databaseHandler.addImpression(impression);
-	}
+    public void setRecording(String recording) {
+        this.recording = recording;
+    }
 
-	public void setupDatabase(Context context) {
-		databaseHandler = new DatabaseHandler(context);
-	}
+    public void addImpression(Impression impression) {
+        databaseHandler.addImpression(impression);
+    }
 
-	public List<Impression> getAllImpressions() {
-		return databaseHandler.getAllImpressions();
+    public void setupDatabase(Context context) {
+        databaseHandler = new DatabaseHandler(context);
+    }
 
-	}
+    public List<Impression> getAllImpressions() {
+        return databaseHandler.getAllImpressions();
+    }
 }

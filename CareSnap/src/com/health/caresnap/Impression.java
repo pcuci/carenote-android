@@ -2,91 +2,91 @@ package com.health.caresnap;
 
 public class Impression {
 
-	// private variables
-	private int _id;
-	private String _name;
-	private String _specialty;
-	private String _location;
-	private String _note;
-	private String _time;
+    // private variables
+    private int id;
+    private String name;
+    private String specialty;
+    private String location;
+    private String note;
+    private String time;
 
-	// Empty constructor
-	public Impression() {
-	}
+    // Empty constructor
+    public Impression() {
+    }
 
-	// constructor
-	public Impression(int _id, String _name, String _specialty,
-			String _location, String _note, String _time) {
-		this._id = _id;
-		this._name = _name;
-		this._specialty = _specialty;
-		this._location = _location;
-		this._note = _note;
-		this._time = _time;
+    // constructor
+    public Impression(int id, String name, String specialty,
+                      String location, String note, String time) {
+        this.id = id;
+        this.name = name;
+        this.specialty = specialty;
+        this.location = location;
+        this.note = note;
+        this.time = time;
 
-	}
+    }
 
-	// constructor
-	public Impression(String name, String _specialty, String _location,
-			String _note, String _time) {
-		this._name = name;
-		this._specialty = _specialty;
-		this._location = _location;
-		this._note = _note;
-		this._time = _time;
-	}
+    // constructor
+    public Impression(String name, String specialty, String location,
+                      String note, String time) {
+        this.name = name;
+        this.specialty = specialty;
+        this.location = location;
+        this.note = note;
+        this.time = time;
+    }
 
-	// getting ID
-	public int getID() {
-		return this._id;
-	}
+    // getting ID
+    public int getID() {
+        return this.id;
+    }
 
-	// setting id
-	public void setID(int id) {
-		this._id = id;
-	}
+    // setting id
+    public void setID(int id) {
+        this.id = id;
+    }
 
-	// getting name
-	public String getName() {
-		return this._name;
-	}
+    // getting name
+    public String getName() {
+        return this.name;
+    }
 
-	// setting name
-	public void setName(String name) {
-		this._name = name;
-	}
+    // setting name
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getSpecialty() {
-		return _specialty;
-	}
+    public String getSpecialty() {
+        return specialty;
+    }
 
-	// setting name
-	public void setSpecialty(String specialty) {
-		this._specialty = specialty;
-	}
+    // setting name
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
 
-	public String getLocation() {
-		return _location;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public void setLocation(String _location) {
-		this._location = _location;
-	}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-	public String getNote() {
-		return _note;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public void setNote(String _note) {
-		this._note = _note;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public String getTime() {
-		return _time;
-	}
+    public String getTime() {
+        return time;
+    }
 
-	public void setTime(String _time) {
-		this._time = _time;
-	}
+    public void setTime(String time) {
+        this.time = time;
+    }
 
 }
