@@ -106,18 +106,20 @@ public class ImpressionNewActivity extends Activity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == 1) {
 
+            // TODO - What sets this RESULT_OK ?
             if (resultCode == RESULT_OK) {
                 String recordingText = "";
                 recordingText += data.getStringExtra("impression");
-                captureSaveButton.setText("Save Impression/Plan");
+
+                // TODO - use the other button to save the impression
                 Impression impression = new Impression(
                         String.valueOf(nameTextView.getText()),
                         String.valueOf(specialityTextView.getSelectedItem()),
                         String.valueOf(hospitalTextView.getText()),
                         recordingText, dateTime);
+
                 CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
                 global.addImpression(impression);
             }

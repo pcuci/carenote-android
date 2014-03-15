@@ -70,17 +70,24 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/note_new_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
             android:text="@string/note_new_button" />
-    </RelativeLayout>
+
+        <Button
+            android:id="@+id/impression_new_save_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/impression_new_save_button" />
+    </LinearLayout>
 
 </LinearLayout><!-- From: file:/home/paul/workspace/carenote-android/CareSnap/res/layout/activity_impression_new.xml -->

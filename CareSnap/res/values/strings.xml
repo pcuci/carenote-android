@@ -2,6 +2,9 @@
 <resources>
 
     <string name="note_new_button">Add Note</string>
+    <string name="impression_new_button">New Impression</string>
+    <string name="impression_index_button">View All Impressions</string>
+    <string name="impression_new_save_button">Save Impression</string>
 
     <string name="welcome">Welcome to CareSnap</string>
     <string name="app_name">CareSnap</string>

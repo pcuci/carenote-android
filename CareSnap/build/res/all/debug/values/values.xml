@@ -37,6 +37,9 @@
     <string name="clinic_label">Clinic name:</string>
     <string name="clinic_name_label">Clinic name:</string>
     <string name="date_time">Date Time</string>
+    <string name="impression_index_button">View All Impressions</string>
+    <string name="impression_new_button">New Impression</string>
+    <string name="impression_new_save_button">Save Impression</string>
     <string name="note_new_button">Add Note</string>
     <string name="practitioner_label">Practitioner name:</string>
     <string name="record_button">Record</string>

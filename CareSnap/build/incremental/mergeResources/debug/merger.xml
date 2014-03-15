@@ -110,21 +110,29 @@
                 </string>
                 <string name="practitioner_label" >Practitioner name:
                 </string>
+                <string name="impression_index_button" >View All Impressions
+                </string>
+                <string name="impression_new_save_button" >Save Impression
+                </string>
                 <string name="welcome" >Welcome to CareSnap
                 </string>
                 <string name="date_time" >Date Time
                 </string>
                 <string name="app_name" >CareSnap
                 </string>
+                <string name="impression_new_button" >New Impression
+                </string>
                 <string name="clinic_label" >Clinic name:
                 </string>
-                <string name="title_activity_create_impression" >Create New Impression Plan
-                </string>
                 <string name="save_note" >Save Note
+                </string>
+                <string name="title_activity_create_impression" >Create New Impression Plan
                 </string>
                 <string name="clinic_name_label" >Clinic name:
                 </string>
                 <string name="capture" >New Summary
+                </string>
+                <string name="record_button" >Record
                 </string>
 
                 <string-array name="specialties" >
@@ -162,9 +170,6 @@ Physiotherapy
 Dermatology
                     </item>
                 </string-array>
-
-                <string name="record_button" >Record
-                </string>
             </file>
             <file
                 path="/home/paul/workspace/carenote-android/CareSnap/res/values/styles.xml"

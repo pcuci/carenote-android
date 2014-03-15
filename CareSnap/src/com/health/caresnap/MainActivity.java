@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
             isDbCreated = true;
         }
         setContentView(R.layout.activity_main);
-        findViewById(R.id.button_capture_main).setOnClickListener(
+        findViewById(R.id.impression_new_button).setOnClickListener(
                 new View.OnClickListener() {
 
                     @Override
@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
                     }
                 }
         );
-        findViewById(R.id.button_view_main).setOnClickListener(
+        findViewById(R.id.impression_index_button).setOnClickListener(
                 new View.OnClickListener() {
 
                     @Override
