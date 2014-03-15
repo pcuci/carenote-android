@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.health.caresnap.CareSnapMainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
@@ -25,13 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.health.caresnap.CaptureActivity" />
+        <activity android:name=".NoteNewActivity" />
         <activity
-            android:name="com.health.caresnap.ViewImpressionActivity"
+            android:name=".ImpressionShowActivity"
             android:label="@string/title_activity_impression" >
         </activity>
         <activity
-            android:name="com.health.caresnap.CreateImpressionActivity"
+            android:name=".ImpressionNewActivity"
             android:label="@string/title_activity_create_impression" >
         </activity>
     </application>

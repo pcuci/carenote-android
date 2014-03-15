@@ -1,11 +1,13 @@
 package com.health.caresnap;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+
+import com.health.caresnap.com.health.caresnap.model.Impression;
+import com.health.caresnap.com.health.caresnap.persistance.DatabaseHandler;
 
 public class CaptureSessionGlobal extends Application {
     private String TAG = "SESSION_STATE";

@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="100dp"
+        android:paddingBottom="50dp"
+        android:gravity="center"
+        android:text="@string/welcome"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@id/button_capture_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/capture" />
+
+    <Button
+        android:id="@id/button_view_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/view" />
+
+</LinearLayout><!-- From: file:/home/paul/workspace/carenote-android/CareSnap/res/layout/activity_main.xml -->
