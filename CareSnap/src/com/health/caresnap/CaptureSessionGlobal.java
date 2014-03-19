@@ -11,7 +11,6 @@ import com.health.caresnap.com.health.caresnap.persistance.DatabaseHandler;
 
 public class CaptureSessionGlobal extends Application {
     private String TAG = "SESSION_STATE";
-    private String recording;
     private DatabaseHandler databaseHandler;
 
     public enum CaptureSessionState {
@@ -35,14 +34,6 @@ public class CaptureSessionGlobal extends Application {
     public void setSessionState(CaptureSessionState sessionState) {
         this.sessionState = sessionState;
         Log.d(TAG, "SESSION STATE:" + sessionState);
-    }
-
-    public String getRecording() {
-        return recording;
-    }
-
-    public void setRecording(String recording) {
-        this.recording = recording;
     }
 
     public void addImpression(Impression impression) {

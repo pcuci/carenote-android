@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.health.caresnap.CaptureSessionGlobal.CaptureSessionState;
 import com.health.caresnap.com.health.caresnap.model.Impression;
 
@@ -24,34 +25,58 @@ public class ImpressionNewActivity extends Activity {
     private String recordingText = "";
     private Thread timeThread;
     private String TAG = "CREATE_IMPRESSION";
-    private Button captureSaveButton;
+    private Button addNewNoteButton;
+    private Button saveImpressionButton;
     private TextView nameTextView;
     private Spinner specialityTextView;
     private TextView hospitalTextView;
+    private final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_impression_new);
-        captureSaveButton = (Button) findViewById(R.id.note_new_button);
+        addNewNoteButton = (Button) findViewById(R.id.note_new_button);
+        saveImpressionButton = (Button) findViewById(R.id.impression_new_save_button);
         nameTextView = (TextView) findViewById(R.id.doctor_name);
         specialityTextView = (Spinner) findViewById(R.id.speciality_spinner);
         hospitalTextView = (TextView) findViewById(R.id.clinic_name);
-        captureSaveButton.setOnClickListener(new View.OnClickListener() {
+        addNewNoteButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
 
                 CaptureSessionGlobal session = ((CaptureSessionGlobal) getApplicationContext());
-                if (session.getSessionState() == CaptureSessionState.PAUSED) {
-                    updateSessionState(CaptureSessionState.FINAL_SAVE);
-                } else if (session.getSessionState() == CaptureSessionState.STOPPED) {
-                    captureSaveButton.setText("Capture");
-                } else if (session.getSessionState() == CaptureSessionState.STARTING) {
+                Log.d(TAG, "clicking Add Note Session state: " + session);
 
+               if (session.getSessionState() == CaptureSessionState.STOPPED) {
+                   recordingText="";
+                } else if (session.getSessionState() == CaptureSessionState.STARTING) {
                     Intent i = new Intent(getBaseContext(),
                             NoteNewActivity.class);
-                    startActivityForResult(i, 1);
+                    startActivityForResult(i, REQUEST_CODE);
+                }
+            }
+        });
+
+        saveImpressionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CaptureSessionGlobal session = ((CaptureSessionGlobal) getApplicationContext());
+                CaptureSessionState state = session.getSessionState();
+                if (state == CaptureSessionState.FINISHED_RECORDING) {
+                    // TODO - use the other button to save the impression
+                    Impression impression = new Impression(
+                            String.valueOf(nameTextView.getText()),
+                            String.valueOf(specialityTextView.getSelectedItem()),
+                            String.valueOf(hospitalTextView.getText()),
+                            recordingText, dateTime);
+
+                    session.addImpression(impression);
+                    clearFields();
+                    session.setSessionState(CaptureSessionState.STARTING);
+
+                    Toast.makeText(getBaseContext(), "Impression saved.", 2000).show();
                 }
             }
         });
@@ -61,7 +86,9 @@ public class ImpressionNewActivity extends Activity {
         // // Enabling Up / Back navigation
         // actionBar.setDisplayHomeAsUpEnabled(true);
         dateTimeTextView = (TextView) findViewById(R.id.date_time_textview);
-        timeThread = new Thread() {
+
+        saveImpressionButton.setEnabled(false);
+        timeThread= new Thread() {
             public void run() {
                 Calendar c = Calendar.getInstance();
                 Date date = c.getTime();
@@ -88,6 +115,7 @@ public class ImpressionNewActivity extends Activity {
                 .getSessionState();
         if (sessionState == CaptureSessionState.STOPPED) {
             updateSessionState(CaptureSessionState.STARTING);
+            clearFields();
         }
     }
 
@@ -103,34 +131,30 @@ public class ImpressionNewActivity extends Activity {
     public void onBackPressed() {
         Intent i = new Intent(getBaseContext(), MainActivity.class);
         startActivity(i);
+
+        updateSessionState(CaptureSessionState.STOPPED);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
+        if (requestCode == REQUEST_CODE) {
 
-            // TODO - What sets this RESULT_OK ?
             if (resultCode == RESULT_OK) {
-                String recordingText = "";
-                recordingText += data.getStringExtra("impression");
-
-                // TODO - use the other button to save the impression
-                Impression impression = new Impression(
-                        String.valueOf(nameTextView.getText()),
-                        String.valueOf(specialityTextView.getSelectedItem()),
-                        String.valueOf(hospitalTextView.getText()),
-                        recordingText, dateTime);
-
-                CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
-                global.addImpression(impression);
-            }
-            if (resultCode == RESULT_CANCELED) {
+                recordingText += data.getStringExtra(NoteNewActivity.NOTE_TEXT);
+                saveImpressionButton.setEnabled(true);
             }
         }
     } // onActivityResult
 
     private void updateSessionState(CaptureSessionState newState) {
+        if(newState==null)
+            return;
         CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
         global.setSessionState(newState);
     }
-
+    private void clearFields(){
+       nameTextView.setText("");
+       specialityTextView.setSelection(0);
+       hospitalTextView.setText("");
+        saveImpressionButton.setEnabled(false);
+    }
 }

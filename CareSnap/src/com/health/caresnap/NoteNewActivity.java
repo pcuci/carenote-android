@@ -19,6 +19,7 @@ public class NoteNewActivity extends Activity implements OnClickListener {
 	protected static final int REQUEST_OK = 1;
 	protected String impressionText;
 	protected Button saveButton;
+    public static final String NOTE_TEXT= "NOTE_TEXT";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class NoteNewActivity extends Activity implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				Intent returnIntent = new Intent();
-				returnIntent.putExtra("impression", impressionText);
+				returnIntent.putExtra(NOTE_TEXT, impressionText);
 				setResult(RESULT_OK, returnIntent);
 				updateSessionState(CaptureSessionState.FINISHED_RECORDING);
 				finish();
@@ -55,8 +56,11 @@ public class NoteNewActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-		Intent i = new Intent(getBaseContext(), ImpressionNewActivity.class);
-		startActivity(i);
+        updateSessionState(CaptureSessionState.STOPPED);
+        Toast.makeText(getBaseContext(), "Note cancelled by user.",2000).show();
+
+        setResult(RESULT_CANCELED);
+        finish();
 	}
 
 	@Override
@@ -71,9 +75,7 @@ public class NoteNewActivity extends Activity implements OnClickListener {
 			view.setText(impressionText);
 			view.setTextSize(24);
 			updateSessionState(CaptureSessionState.PAUSED);
-
-			CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
-			global.setRecording(impressionText);
+            Toast.makeText(getBaseContext(), "Note created, press Save Impression to store it.",2000).show();
 		}
 	}
 
