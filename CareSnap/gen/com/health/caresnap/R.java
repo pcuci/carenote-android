@@ -50,9 +50,9 @@ public final class R {
         public static final int welcome=0x7f05000c;
     }
     public static final class layout {
-        public static final int activity_impression_index=0x7f030000;
-        public static final int activity_impression_new=0x7f030001;
-        public static final int activity_impression_show=0x7f030002;
+        public static final int activity_plan_index =0x7f030000;
+        public static final int activity_plan_new =0x7f030001;
+        public static final int activity_plan_show =0x7f030002;
         public static final int activity_main=0x7f030003;
         public static final int activity_note_new=0x7f030004;
     }
@@ -69,11 +69,11 @@ public final class R {
         public static final int clinic_label=0x7f060010;
         public static final int clinic_name_label=0x7f060013;
         public static final int date_time=0x7f06000d;
-        public static final int impression_index_button=0x7f060002;
-        public static final int impression_new_button=0x7f060001;
-        public static final int impression_new_save_button=0x7f060003;
+        public static final int plan_index_button =0x7f060002;
+        public static final int plan_new_button =0x7f060001;
+        public static final int plan_new_save_button =0x7f060003;
         public static final int note_new_button=0x7f060000;
-        public static final int practitioner_label=0x7f06000e;
+        public static final int physician_label =0x7f06000e;
         public static final int record_button=0x7f060009;
         public static final int record_edit_text=0x7f060008;
         public static final int save_impression=0x7f060012;

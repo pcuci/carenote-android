@@ -1,4 +1,4 @@
-package com.health.caresnap;
+package com.health.caresnap.com.health.caresnap.ui;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.health.caresnap.CaptureSessionGlobal;
 import com.health.caresnap.CaptureSessionGlobal.CaptureSessionState;
+import com.health.caresnap.R;
 
 public class NoteNewActivity extends Activity implements OnClickListener {
 
@@ -37,6 +39,7 @@ public class NoteNewActivity extends Activity implements OnClickListener {
 				setResult(RESULT_OK, returnIntent);
 				updateSessionState(CaptureSessionState.FINISHED_RECORDING);
 				finish();
+
 			}
 		});
 	}
@@ -57,7 +60,7 @@ public class NoteNewActivity extends Activity implements OnClickListener {
 	@Override
 	public void onBackPressed() {
         updateSessionState(CaptureSessionState.STOPPED);
-        Toast.makeText(getBaseContext(), "Note cancelled by user.",2000).show();
+        Toast.makeText(getBaseContext(), "Note cancelled.",Toast.LENGTH_SHORT).show();
 
         setResult(RESULT_CANCELED);
         finish();
@@ -75,7 +78,7 @@ public class NoteNewActivity extends Activity implements OnClickListener {
 			view.setText(impressionText);
 			view.setTextSize(24);
 			updateSessionState(CaptureSessionState.PAUSED);
-            Toast.makeText(getBaseContext(), "Note created, press Save Impression to store it.",2000).show();
+            Toast.makeText(getBaseContext(), "Note created, press Save Plan to store it.",2000).show();
 		}
 	}
 

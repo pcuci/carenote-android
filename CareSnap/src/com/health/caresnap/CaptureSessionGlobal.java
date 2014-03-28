@@ -6,7 +6,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import com.health.caresnap.com.health.caresnap.model.Impression;
+import com.health.caresnap.com.health.caresnap.model.Physician;
+import com.health.caresnap.com.health.caresnap.model.Plan;
 import com.health.caresnap.com.health.caresnap.persistance.DatabaseHandler;
 
 public class CaptureSessionGlobal extends Application {
@@ -36,15 +37,24 @@ public class CaptureSessionGlobal extends Application {
         Log.d(TAG, "SESSION STATE:" + sessionState);
     }
 
-    public void addImpression(Impression impression) {
-        databaseHandler.addImpression(impression);
+    public void addPlan(Plan plan) {
+        databaseHandler.addPlan(plan);
     }
 
     public void setupDatabase(Context context) {
         databaseHandler = new DatabaseHandler(context);
     }
 
-    public List<Impression> getAllImpressions() {
-        return databaseHandler.getAllImpressions();
+    public List<Plan> getAllPlans() {
+        return databaseHandler.getAllPlans();
+    }
+
+
+    public List<Physician> getAllPhysicians() {
+        return databaseHandler.getAllPhysicians();
+    }
+
+    public void addPhysician(Physician physician) {
+        databaseHandler.addPhysician(physician);
     }
 }

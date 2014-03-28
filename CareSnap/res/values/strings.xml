@@ -2,9 +2,9 @@
 <resources>
 
     <string name="note_new_button">Add Note</string>
-    <string name="impression_new_button">New Impression</string>
-    <string name="impression_index_button">View All Impressions</string>
-    <string name="impression_new_save_button">Save Impression</string>
+    <string name="plan_new_button">New Plan</string>
+    <string name="plan_index_button">View Plan History</string>
+    <string name="plan_new_save_button">Save Plan</string>
 
     <string name="welcome">Welcome to CareSnap</string>
     <string name="app_name">CareSnap</string>
@@ -16,11 +16,12 @@
     <string name="view">View Summaries</string>
     <string name="title_activity_impression">Capture Impression/Plan</string>
     <string name="date_time">Date Time</string>
-    <string name="practitioner_label">Practitioner name:</string>
+    <string name="physician_label">Physician\'s name:</string>
     <string name="title_activity_create_impression">Create New Impression Plan</string>
     <string name="clinic_label">Clinic name:</string>
     <string name="speciality_prompt">Choose Specialty</string>
     <string name="save_impression">Save</string>
+    <string name="doctor_prompt">Select Physician</string>
 
     <string-array name="specialties">
         <item>Choose Specialty</item>

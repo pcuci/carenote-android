@@ -4,46 +4,39 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:parentActivityName="com.health.caresnap.MainActivity"
-    tools:context="com.health.caresnap.ImpressionNewActivity">
+    tools:context="com.health.caresnap.com.health.caresnap.ui.PlanNewActivity">
 
     <TextView
         android:id="@id/date_time_textview"
-        android:layout_width="297dp"
+        android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:text="@string/date_time"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="67dp">
 
-        <TextView
-            android:id="@+id/doctor_name_label"
-            android:layout_width="297dp"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/practitioner_label"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <EditText
-            android:id="@+id/doctor_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:text="Add New"
+            android:id="@+id/addNewPractitioner"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </RelativeLayout>
+            android:layout_alignParentEnd="true" />
 
-    <Spinner
-        android:id="@+id/speciality_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/specialties"
-        android:prompt="@string/speciality_prompt"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:prompt="@string/doctor_prompt"
+            android:id="@+id/physiciansSpinner"
+            android:layout_toLeftOf="@+id/addNewPractitioner"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -87,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/impression_new_save_button" />
+            android:text="@string/plan_new_save_button" />
     </LinearLayout>
 
 </LinearLayout>

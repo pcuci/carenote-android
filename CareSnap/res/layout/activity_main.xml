@@ -21,12 +21,12 @@
         android:id="@+id/impression_new_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/impression_new_button" />
+        android:text="@string/plan_new_button" />
 
     <Button
         android:id="@+id/impression_index_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/impression_index_button" />
+        android:text="@string/plan_index_button" />
 
 </LinearLayout>

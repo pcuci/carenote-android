@@ -1,4 +1,4 @@
-package com.health.caresnap;
+package com.health.caresnap.com.health.caresnap.ui;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.health.caresnap.R;
 
-public class ImpressionIndexActivity extends Activity implements OnClickListener {
+public class PlanIndexActivity extends Activity implements OnClickListener {
 
 	protected static final int REQUEST_OK = 1;
 

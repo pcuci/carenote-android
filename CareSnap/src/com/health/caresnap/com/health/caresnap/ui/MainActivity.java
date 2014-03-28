@@ -1,4 +1,4 @@
-package com.health.caresnap;
+package com.health.caresnap.com.health.caresnap.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.health.caresnap.com.health.caresnap.model.Impression;
+import com.health.caresnap.CaptureSessionGlobal;
+import com.health.caresnap.R;
+import com.health.caresnap.com.health.caresnap.model.Plan;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class MainActivity extends Activity {
                     public void onClick(View arg0) {
 
                         Intent i = new Intent(getBaseContext(),
-                                ImpressionNewActivity.class);
+                                PlanNewActivity.class);
                         startActivity(i);
                     }
                 }
@@ -40,7 +42,7 @@ public class MainActivity extends Activity {
                     public void onClick(View arg0) {
 
                         Intent i = new Intent(getBaseContext(),
-                                ImpressionShowActivity.class);
+                                PlanShowActivity.class);
                         startActivity(i);
                     }
                 }
@@ -50,36 +52,37 @@ public class MainActivity extends Activity {
     private void dbSetup() {
         CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
         global.setupDatabase(this);
-        // insertDummyData(global);
     }
 
     private void insertDummyData(CaptureSessionGlobal global) {
         // Inserting Impressions
+        /*
         Log.d("Insert: ", "Inserting ..");
-        global.addImpression(new Impression("Ravi Pundit", "Cardiologist",
+        global.addPlan(new Plan("Ravi Pundit", "Cardiologist",
                 "Montreal",
                 "Blood pressure normal. Do take more walks in the morning. Please see me next month.", ""));
-        global.addImpression(new Impression("Maggie Odell", "Family Medicine",
+        global.addPlan(new Plan("Maggie Odell", "Family Medicine",
                 "Up north",
                 "Good electrocardiogram, you need to see an endocrinologist for complications.", ""));
-        global.addImpression(new Impression("Tommy Bran", "Endocrinologist",
+        global.addPlan(new Plan("Tommy Bran", "Endocrinologist",
                 "Quebec City", "Good cholesterol, it is low, but do your best to eat more fish.", ""));
-        global.addImpression(new Impression("Samuel Torrents", "Heart Surgeon",
+        global.addPlan(new Plan("Samuel Torrents", "Heart Surgeon",
                 "Toronto",
                 "Heart transplant surgery went well, practice mediation.", ""));
 
         // Reading all contacts
         Log.d("Reading: ", "Reading all contacts..");
-        List<Impression> impressionList = global.getAllImpressions();
+        List<Plan> planList = global.getAllPlans();
 
-        for (Impression impression : impressionList) {
-            String log = "Id: " + impression.getID() + " , Name: "
-                    + impression.getName() + " , Specialty: "
-                    + impression.getSpecialty() + " , Location: "
-                    + impression.getSpecialty() + " , Note: "
-                    + impression.getSpecialty();
+        for (Plan plan : planList) {
+            String log = "Id: " + plan.getID() + " , Name: "
+                    + plan.getName() + " , Specialty: "
+                    + plan.getSpecialty() + " , Location: "
+                    + plan.getSpecialty() + " , Note: "
+                    + plan.getSpecialty();
             // Writing Contacts to log
             Log.d("Name: ", log);
         }
+        */
     }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+    <EditText
+        android:id="@+id/add_practitioner_name_textView"
+        android:layout_width="fill_parent"
+        android:layout_height="80px"
+        android:textColor="#000"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView" />
+
+    <Spinner
+        android:id="@+id/speciality_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/specialties"
+        android:prompt="@string/speciality_prompt"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/add_practitioner_name_textView" />
+    <Button
+        android:id="@+id/dialog_add_button"
+        android:layout_width="130px"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/speciality_spinner"
+        />
+
+    <Button
+        android:id="@+id/dialog_cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_alignTop="@+id/dialog_add_button"
+        android:layout_toRightOf="@+id/dialog_add_button" />
+
+
+</RelativeLayout>

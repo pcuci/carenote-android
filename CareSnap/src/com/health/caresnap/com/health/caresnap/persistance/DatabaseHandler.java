@@ -8,154 +8,237 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.format.Time;
 import android.util.Log;
 
-import com.health.caresnap.com.health.caresnap.model.Impression;
+import com.health.caresnap.com.health.caresnap.model.Physician;
+import com.health.caresnap.com.health.caresnap.model.Plan;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-	// All Static variables
-	// Database Version
-	private static final int DATABASE_VERSION = 1;
+    // All Static variables
+    // Database Version
+    private static final int DATABASE_VERSION = 1;
 
-	// Database Name
-	private static final String DATABASE_NAME = "snapCare";
+    // Database Name
+    private static final String DATABASE_NAME = "snapCare";
 
-	// Contacts table name
-	private static final String TABLE_IMPRESSIONS = "impressions";
+    // Contacts table name
+    private static final String TABLE_PLANS = "Plans";
+    private static final String TABLE_PHYSICIANS = "Physicians";
+    private static final String KEY_PHYSICIAN_ID_STRING = "physician_id";
+    // Plans column names
+    private String TAG = "DATABASE";
 
-	// Contacts Table Columns names
-	private static final String KEY_ID = "id";
-	private static final String KEY_NAME = "name";
-	private static final String KEY_SPECIALTY = "specialty";
-	private static final String KEY_LOCATION = "location";
-	private static final String KEY_NOTE = "note";
-	private static final String KEY_TIME = "time";
+    ;
 
-	private String TAG = "DATABASE";
+    public DatabaseHandler(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
 
-	public DatabaseHandler(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-	}
+    ;
 
-	// Creating Tables
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_IMPRESSIONS
-				+ "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-				+ KEY_SPECIALTY + " TEXT," + KEY_LOCATION + " TEXT," + KEY_NOTE
-				+ " TEXT," + KEY_TIME + " TEXT" + ")";
-		db.execSQL(CREATE_CONTACTS_TABLE);
-		Log.d(TAG, "Database created");
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String CREATE_PLANS_TABLE = "CREATE TABLE " + TABLE_PLANS
+                + "(" + PlanColumn.KEY_PLAN_ID + " integer PRIMARY KEY AUTOINCREMENT," + PlanColumn.KEY_PHYSICIAN_ID.toString() + " integer," + PlanColumn.KEY_LOCATION + " text not null," + PlanColumn.KEY_NOTE
+                + " text," + PlanColumn.KEY_TIME + " datetime" + ",FOREIGN KEY(" + PlanColumn.KEY_PHYSICIAN_ID + ") REFERENCES " + TABLE_PHYSICIANS + "(" + PlanColumn.KEY_PHYSICIAN_ID + "))";
+        String CREATE_DOCTORS_TABLE = "CREATE TABLE " + TABLE_PHYSICIANS + "(" + PhysicianColumn.KEY_PHYSICIAN + " integer PRIMARY KEY autoincrement," + PhysicianColumn.KEY_PHYSICIAN_NAME + " text,"
+                + PhysicianColumn.KEY_PHYSICIAN_SPECIALITY + " text" + ")";
 
-	}
+        db.execSQL(CREATE_DOCTORS_TABLE);
+        db.execSQL(CREATE_PLANS_TABLE);
+        Log.d(TAG, "Database created");
+    }
 
-	// Upgrading database
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// Drop older table if existed
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMPRESSIONS);
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANS);
 
-		// Create tables again
-		onCreate(db);
-	}
+        onCreate(db);
+    }
 
-	// Adding new contact
-	public void addImpression(Impression impression) {
-		SQLiteDatabase db = this.getWritableDatabase();
+    public void addPlan(Plan plan) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-		ContentValues values = new ContentValues();
-		values.put(KEY_NAME, impression.getName()); // Contact Name
-		values.put(KEY_SPECIALTY, impression.getSpecialty()); // Contact Phone
-		values.put(KEY_LOCATION, impression.getLocation()); 		
-		values.put(KEY_NOTE, impression.getNote()); 			
-		values.put(KEY_TIME, impression.getTime()); 		
+        ContentValues values = new ContentValues();
+        values.put(PlanColumn.KEY_PHYSICIAN_ID.toString(), plan.getPhysician().getPhysicianId());
+        values.put(PlanColumn.KEY_LOCATION.toString(), plan.getLocation());
+        values.put(PlanColumn.KEY_NOTE.toString(), plan.getNote());
+        values.put(PlanColumn.KEY_TIME.toString(), plan.getTime().format2445() );
 
-		// Inserting Row
-		db.insert(TABLE_IMPRESSIONS, null, values);
-		db.close(); // Closing database connection
-	}
+        db.insert(TABLE_PLANS, null, values);
+        db.close();
+    }
 
-	// Getting single contact
-	public Impression getImpression(int id) {
+    public Plan getPlan(int id) {
 
-		SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor cursor = db.query(TABLE_IMPRESSIONS, new String[] { KEY_ID,
-				KEY_NAME, KEY_SPECIALTY, KEY_LOCATION, KEY_NOTE, KEY_TIME },
-				KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null,
-				null, null);
-		if (cursor != null)
-			cursor.moveToFirst();
+        Cursor planCursor = db.query(TABLE_PLANS, new String[]{PlanColumn.KEY_PLAN_ID.toString(),
+                PlanColumn.KEY_PHYSICIAN_ID.toString(), PlanColumn.KEY_LOCATION.toString(), PlanColumn.KEY_NOTE.toString(), PlanColumn.KEY_TIME.toString()},
+                PlanColumn.KEY_PLAN_ID.toString() + "=?", new String[]{String.valueOf(id)}, null, null,
+                null, null);
 
-		Impression impression = new Impression(Integer.parseInt(cursor
-				.getString(0)), cursor.getString(1), cursor.getString(2),
-				cursor.getString(3), cursor.getString(4), cursor.getString(5));
-		return impression;
-	}
 
-	public List<Impression> getAllImpressions() {
+        if (planCursor != null) {
+            planCursor.moveToFirst();
+        }
 
-		List<Impression> impressionList = new ArrayList<Impression>();
-		// Select All Query
-		String selectQuery = "SELECT * FROM " + TABLE_IMPRESSIONS;
+        int physicianId = Integer.parseInt(planCursor.getString(PlanColumn.KEY_PHYSICIAN_ID.ordinal()));
+        Physician physician = getPhysician(physicianId);
+        Time timestamp = new Time();
+        String time = planCursor.getString(PlanColumn.KEY_TIME.ordinal());
+        Log.d(TAG,"time from db:"+time);
+        timestamp.parse(time);
 
-		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
+        Plan plan = new Plan(Integer.parseInt(planCursor
+                .getString(PlanColumn.KEY_PLAN_ID.ordinal())), physician, planCursor.getString(PlanColumn.KEY_LOCATION.ordinal()),
+                planCursor.getString(PlanColumn.KEY_NOTE.ordinal()),timestamp);
 
-		// looping through all rows and adding to list
-		if (cursor.moveToFirst()) {
-			do {
-				Impression impression = new Impression();
-				impression.setID(Integer.parseInt(cursor.getString(0)));
-				impression.setName(cursor.getString(1));
-				impression.setSpecialty(cursor.getString(2));
-				impression.setLocation(cursor.getString(3));
-				impression.setNote(cursor.getString(4));
-				impression.setTime(cursor.getString(5));
+        planCursor.close();
+        db.close();
+        return plan;
+    }
 
-				impressionList.add(impression);
-			} while (cursor.moveToNext());
-		}
+    public List<Plan> getAllPlans() {
 
-		// return contact list
-		return impressionList;
-	}
+        List<Plan> planList = new ArrayList<Plan>();
 
-	// Getting contacts Count
-	public int getImpressionsCount() {
+        String plansSelectQuery = "SELECT * FROM " + TABLE_PLANS;
 
-		String countQuery = "SELECT  * FROM " + TABLE_IMPRESSIONS;
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery(countQuery, null);
-		cursor.close();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor planCursor = db.rawQuery(plansSelectQuery, null);
 
-		// return count
-		return cursor.getCount();
-	}
+        // looping through all rows and adding to list
+        if (planCursor.moveToFirst()) {
+            do {
+                int physicianId = Integer.parseInt(planCursor.getString(PlanColumn.KEY_PHYSICIAN_ID.ordinal()));
+                Physician physician = getPhysician(physicianId);
+                Time timestamp = new Time();
+                String time = planCursor.getString(PlanColumn.KEY_TIME.ordinal());
+                Log.d(TAG,"time from db:"+time);
+                Plan plan = new Plan(Integer.parseInt(planCursor
+                        .getString(PlanColumn.KEY_PLAN_ID.ordinal())), physician, planCursor.getString(PlanColumn.KEY_LOCATION.ordinal()),
+                        planCursor.getString(PlanColumn.KEY_NOTE.ordinal()), timestamp);
+                planList.add(plan);
+            } while (planCursor.moveToNext());
+        }
 
-	// Updating single contact
-	public int updateImpression(Impression impression) {
+        planCursor.close();
+        db.close();
 
-		SQLiteDatabase db = this.getWritableDatabase();
+        return planList;
+    }
 
-		ContentValues values = new ContentValues();
-		values.put(KEY_NAME, impression.getName());
-		values.put(KEY_SPECIALTY, impression.getSpecialty());
-		values.put(KEY_LOCATION, impression.getLocation());
-		values.put(KEY_NOTE, impression.getNote());
-		values.put(KEY_TIME, impression.getTime());
+    public int getPlansCount() {
 
-		// updating row
-		return db.update(TABLE_IMPRESSIONS, values, KEY_ID + " = ?",
-				new String[] { String.valueOf(impression.getID()) });
-	}
+        String countQuery = "SELECT  * FROM " + TABLE_PLANS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
 
-	// Deleting single contact
-	public void deleteContact(Impression impression) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(TABLE_IMPRESSIONS, KEY_ID + " = ?",
-				new String[] { String.valueOf(impression.getID()) });
-		db.close();
-	}
+        return cursor.getCount();
+    }
+
+    public int updatePlan(Plan plan) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(PlanColumn.KEY_PHYSICIAN_ID.toString(), plan.getPhysician().getPhysicianId());
+        values.put(PlanColumn.KEY_LOCATION.toString(), plan.getLocation());
+        values.put(PlanColumn.KEY_NOTE.toString(), plan.getNote());
+        values.put(PlanColumn.KEY_TIME.toString(), plan.getTime().format("%c"));
+
+        return db.update(TABLE_PLANS, values, PlanColumn.KEY_PLAN_ID.toString() + " = ?",
+                new String[]{String.valueOf(plan.getID())});
+    }
+
+    public void deletePlan(Plan plan) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PLANS, PlanColumn.KEY_PLAN_ID.toString() + " = ?",
+                new String[]{String.valueOf(plan.getID())});
+        db.close();
+    }
+
+    public Physician getPhysician(int physicianId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor physicianCursor = db.query(TABLE_PHYSICIANS, new String[]{PhysicianColumn.KEY_PHYSICIAN.toString(),
+                PhysicianColumn.KEY_PHYSICIAN_NAME.toString(), PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.toString()},
+                PhysicianColumn.KEY_PHYSICIAN.toString() + "=?", new String[]{String.valueOf(physicianId)}, null, null,
+                null, null);
+
+        if (physicianCursor != null)
+            physicianCursor.moveToFirst();
+
+        Physician physician = new Physician(Integer.parseInt(physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN.ordinal())), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_NAME.ordinal()), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.ordinal()));
+
+        physicianCursor.close();
+        db.close();
+        return physician;
+    }
+
+    public void addPhysician(Physician physician) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(PhysicianColumn.KEY_PHYSICIAN_NAME.toString(), physician.getName());
+        values.put(PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.toString(), physician.getSpeciality());
+
+        db.insert(TABLE_PHYSICIANS, null, values);
+        db.close();
+    }
+
+    public List<Physician> getAllPhysicians() {
+
+        List<Physician> physicianList = new ArrayList<Physician>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_PHYSICIANS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor physicianCursor = db.rawQuery(selectQuery, null);
+
+        if (physicianCursor.moveToFirst()) {
+            do {
+                Physician physician = new Physician(Integer.parseInt(physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN.ordinal())), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_NAME.ordinal()), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.ordinal()));
+                physicianList.add(physician);
+            } while (physicianCursor.moveToNext());
+        }
+
+        physicianCursor.close();
+        db.close();
+
+        return physicianList;
+    }
+
+    private enum PlanColumn {
+        KEY_PLAN_ID("plan_id"), KEY_PHYSICIAN_ID(KEY_PHYSICIAN_ID_STRING), KEY_LOCATION("plan_location"), KEY_NOTE("plane_note"), KEY_TIME("plan_time");
+        private String columnName;
+
+        private PlanColumn(String columnName) {
+            this.columnName = columnName;
+        }
+
+        @Override
+        public String toString() {
+            return columnName;
+        }
+    }
+
+    private enum PhysicianColumn {
+        KEY_PHYSICIAN(KEY_PHYSICIAN_ID_STRING), KEY_PHYSICIAN_NAME("physician_name"), KEY_PHYSICIAN_SPECIALITY("physician_speciality");
+        private String columnName;
+
+        private PhysicianColumn(String columnName) {
+            this.columnName = columnName;
+        }
+
+        @Override
+        public String toString() {
+            return columnName;
+        }
+    }
+
 }

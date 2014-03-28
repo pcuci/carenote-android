@@ -1,4 +1,4 @@
-package com.health.caresnap;
+package com.health.caresnap.com.health.caresnap.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.health.caresnap.com.health.caresnap.model.Impression;
+import com.health.caresnap.CaptureSessionGlobal;
+import com.health.caresnap.R;
+import com.health.caresnap.com.health.caresnap.model.Plan;
 
-public class ImpressionShowActivity extends ListActivity {
+public class PlanShowActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,15 +54,15 @@ public class ImpressionShowActivity extends ListActivity {
 	private void updateList() {
 		CaptureSessionGlobal global = ((CaptureSessionGlobal) getApplicationContext());
 		setListAdapter(new ArrayAdapter<String>(this,
-				R.layout.activity_impression_show,
-				convertList(global.getAllImpressions())));
+				R.layout.activity_plan_show,
+				convertList(global.getAllPlans())));
 	}
 
-	private List<String> convertList(List<Impression> list) {
+	private List<String> convertList(List<Plan> list) {
 		List<String> result = new ArrayList<String>();
-		for (Impression entry : list) {
-			result.add(entry.getTime() + ": Doctor: " + entry.getName() + " - "
-					+ entry.getSpecialty() + " @ " + entry.getLocation()
+		for (Plan entry : list) {
+			result.add(entry.getTime().format("%c") + ": Physician: " + entry.getPhysician().getName() + " - "
+					+ entry.getPhysician().getSpeciality() + " @ " + entry.getLocation()
 					+ "\n" + entry.getNote());
 		}
 		return result;
