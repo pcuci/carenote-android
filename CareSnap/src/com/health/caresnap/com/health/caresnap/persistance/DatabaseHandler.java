@@ -65,7 +65,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(PlanColumn.KEY_PHYSICIAN_ID.toString(), plan.getPhysician().getPhysicianId());
         values.put(PlanColumn.KEY_LOCATION.toString(), plan.getLocation());
         values.put(PlanColumn.KEY_NOTE.toString(), plan.getNote());
-        values.put(PlanColumn.KEY_TIME.toString(), plan.getTime().format2445() );
+        values.put(PlanColumn.KEY_TIME.toString(), plan.getTime().format2445());
 
         db.insert(TABLE_PLANS, null, values);
         db.close();
@@ -87,14 +87,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         int physicianId = Integer.parseInt(planCursor.getString(PlanColumn.KEY_PHYSICIAN_ID.ordinal()));
         Physician physician = getPhysician(physicianId);
-        Time timestamp = new Time();
-        String time = planCursor.getString(PlanColumn.KEY_TIME.ordinal());
-        Log.d(TAG,"time from db:"+time);
-        timestamp.parse(time);
+
+        Time timestamp = parseStringToTime(planCursor.getString(PlanColumn.KEY_TIME.ordinal()));
+        Log.d(TAG, "time from db:" + timestamp.format("%c"));
 
         Plan plan = new Plan(Integer.parseInt(planCursor
                 .getString(PlanColumn.KEY_PLAN_ID.ordinal())), physician, planCursor.getString(PlanColumn.KEY_LOCATION.ordinal()),
-                planCursor.getString(PlanColumn.KEY_NOTE.ordinal()),timestamp);
+                planCursor.getString(PlanColumn.KEY_NOTE.ordinal()), timestamp);
 
         planCursor.close();
         db.close();
@@ -115,9 +114,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             do {
                 int physicianId = Integer.parseInt(planCursor.getString(PlanColumn.KEY_PHYSICIAN_ID.ordinal()));
                 Physician physician = getPhysician(physicianId);
-                Time timestamp = new Time();
-                String time = planCursor.getString(PlanColumn.KEY_TIME.ordinal());
-                Log.d(TAG,"time from db:"+time);
+                Time timestamp = parseStringToTime(planCursor.getString(PlanColumn.KEY_TIME.ordinal()));
+                Log.d(TAG, "time from db:" + timestamp.format("%c"));
                 Plan plan = new Plan(Integer.parseInt(planCursor
                         .getString(PlanColumn.KEY_PLAN_ID.ordinal())), physician, planCursor.getString(PlanColumn.KEY_LOCATION.ordinal()),
                         planCursor.getString(PlanColumn.KEY_NOTE.ordinal()), timestamp);
@@ -211,6 +209,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
 
         return physicianList;
+    }
+
+    private Time parseStringToTime(String time224) {
+        Time timestamp = new Time();
+        timestamp.parse(time224);
+        return timestamp;
     }
 
     private enum PlanColumn {

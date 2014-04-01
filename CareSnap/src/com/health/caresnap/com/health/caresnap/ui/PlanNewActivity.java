@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.health.caresnap.CaptureSessionGlobal;
 import com.health.caresnap.CaptureSessionGlobal.CaptureSessionState;
@@ -78,13 +80,22 @@ public class PlanNewActivity extends Activity {
                 CaptureSessionState state = session.getSessionState();
                 if (state == CaptureSessionState.FINISHED_RECORDING) {
                     NothingSelectedSpinnerAdapter wrappedAdapter = (NothingSelectedSpinnerAdapter) physiciansSpinner.getAdapter();
-                    int selectedId = (int) physiciansSpinner.getSelectedItemId();
-                    Physician physician = (Physician) wrappedAdapter.getAdapter().getItem(selectedId);
+                    int selectedPhysicianId = (int) physiciansSpinner.getSelectedItemId();
+                    String hospitalName = hospitalTextView.getText().toString();
+                   /* if (selectedPhysicianId == 0) {
+                        Toast.makeText(PlanNewActivity.this.getBaseContext(), "Select a physician", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(hospitalName.equals("")){
+                        Toast.makeText(PlanNewActivity.this.getBaseContext(), "Enter hospital name", Toast.LENGTH_SHORT).show();
+                        return;
+                    }*/
+                    Physician physician = (Physician) wrappedAdapter.getAdapter().getItem(selectedPhysicianId);
 
                     Log.d(TAG, "CURRENT TIME: " + getCurrentTime());
                     Plan plan = new Plan(
                             physician,
-                            String.valueOf(hospitalTextView.getText()),
+                            hospitalName,
                             recordingText, getCurrentTime());
                     session.addPlan(plan);
                     clearFields();
@@ -149,8 +160,6 @@ public class PlanNewActivity extends Activity {
     }
 
     private Time getCurrentTime() {
-        //Calendar c = Calendar.getInstance();
-        //Date date = c.getTime();
         Time now = new Time();
         now.setToNow();
         return now;
@@ -183,6 +192,7 @@ public class PlanNewActivity extends Activity {
         Physician[] physicians = getAllPhysicians(session);
         ArrayAdapter<Physician> dataAdapter = new PhysicianSpinAdapter(this.getBaseContext(), android.R.layout.simple_spinner_item, physicians);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        physiciansSpinner.setEmptyView(LayoutInflater.from(getBaseContext()).inflate(R.layout.select_physician_nothing_selected, (ViewGroup) physiciansSpinner.getParent(), false));
         physiciansSpinner.setAdapter(
                 new NothingSelectedSpinnerAdapter(
                         dataAdapter,

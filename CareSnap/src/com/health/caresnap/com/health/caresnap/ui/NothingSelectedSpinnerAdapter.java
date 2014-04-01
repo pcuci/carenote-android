@@ -55,13 +55,15 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
         this.nothingSelectedLayout = nothingSelectedLayout;
         this.nothingSelectedDropdownLayout = nothingSelectedDropdownLayout;
         layoutInflater = LayoutInflater.from(context);
+
+
     }
 
     @Override
     public final View getView(int position, View convertView, ViewGroup parent) {
         // This provides the View for the Selected Item in the Spinner, not
         // the dropdown (unless dropdownView is not set).
-        if (position == 0) {
+        if (position == 0|| isEmpty()) {
             return getNothingSelectedView(parent);
         }
         return adapter.getView(position - EXTRA, null, parent); // Could re-use
