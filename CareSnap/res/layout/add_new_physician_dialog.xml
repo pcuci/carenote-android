@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -11,7 +12,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle ="bold"/>
     <EditText
         android:id="@+id/add_practitioner_name_textView"
         android:layout_width="fill_parent"
@@ -21,7 +23,7 @@
         android:inputType="textPersonName"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView" />
+        android:layout_toRightOf="@+id/textView"/>
 
     <Spinner
         android:id="@+id/speciality_spinner"
@@ -30,14 +32,16 @@
         android:entries="@array/specialties"
         android:prompt="@string/speciality_prompt"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@+id/add_practitioner_name_textView" />
+        android:layout_below="@+id/add_practitioner_name_textView"
+        android:textStyle ="bold"/>
     <Button
         android:id="@+id/dialog_add_button"
-        android:layout_width="130px"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add"
-        android:layout_marginTop="5dp"
         android:layout_below="@+id/speciality_spinner"
+        android:background="@drawable/custom_button"
+        style="@style/caresnap_button"
         />
 
     <Button
@@ -45,8 +49,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
-        android:layout_alignTop="@+id/dialog_add_button"
-        android:layout_toRightOf="@+id/dialog_add_button" />
+        android:layout_toRightOf="@+id/dialog_add_button"
+        android:background="@drawable/custom_button"
+        style="@style/caresnap_button"
+        android:layout_below="@+id/speciality_spinner" />
 
 
 </RelativeLayout>

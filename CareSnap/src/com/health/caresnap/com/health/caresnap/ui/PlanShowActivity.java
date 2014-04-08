@@ -67,4 +67,9 @@ public class PlanShowActivity extends ListActivity {
 		}
 		return result;
 	}
+
+    @Override
+    public ListView getListView() {
+        return super.getListView();
+    }
 }

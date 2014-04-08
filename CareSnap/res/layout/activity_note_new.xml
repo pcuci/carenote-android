@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="40dp"
     tools:context=".NoteNewActivity">
 
     <EditText
@@ -27,8 +28,10 @@
         android:id="@+id/record_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@android:drawable/ic_btn_speak_now"
-        android:text="@string/record_button" />
+        android:drawableLeft="@drawable/record_small_ico"
+        android:text="@string/record_button"
+        android:background="@drawable/custom_button"
+        style="@style/caresnap_button"/>
 
     <Button
         android:id="@+id/save_capture_button"
@@ -36,6 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/save_note" />
+        android:text="@string/save_note"
+        android:background="@drawable/custom_button"
+        style="@style/caresnap_button"/>
 
 </LinearLayout>

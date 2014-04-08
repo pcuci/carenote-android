@@ -82,17 +82,23 @@ public class PlanNewActivity extends Activity {
                     NothingSelectedSpinnerAdapter wrappedAdapter = (NothingSelectedSpinnerAdapter) physiciansSpinner.getAdapter();
                     int selectedPhysicianId = (int) physiciansSpinner.getSelectedItemId();
                     String hospitalName = hospitalTextView.getText().toString();
-                   /* if (selectedPhysicianId == 0) {
-                        Toast.makeText(PlanNewActivity.this.getBaseContext(), "Select a physician", Toast.LENGTH_SHORT).show();
+
+                    Physician physician = null;
+                    try {
+                        physician = (Physician) wrappedAdapter.getAdapter().getItem(selectedPhysicianId);
+                    } catch (Exception e) {
+
+                        Toast.makeText(getBaseContext(), "Select a physician.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(hospitalName.equals("")){
-                        Toast.makeText(PlanNewActivity.this.getBaseContext(), "Enter hospital name", Toast.LENGTH_SHORT).show();
+                    if(hospitalName ==null || hospitalName.equals("")){
+                        Toast.makeText(getBaseContext(), "Enter clinic name.", Toast.LENGTH_SHORT).show();
                         return;
-                    }*/
-                    Physician physician = (Physician) wrappedAdapter.getAdapter().getItem(selectedPhysicianId);
-
-                    Log.d(TAG, "CURRENT TIME: " + getCurrentTime());
+                    }
+                    if(recordingText ==null || recordingText.equals("")){
+                        Toast.makeText(getBaseContext(), "Recording is empty.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Plan plan = new Plan(
                             physician,
                             hospitalName,

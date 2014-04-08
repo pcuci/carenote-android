@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:padding="40dp"
     tools:context=".MainActivity">
 
     <TextView
@@ -15,18 +14,23 @@
         android:paddingBottom="50dp"
         android:gravity="center"
         android:text="@string/welcome"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle ="bold"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <Button
+        android:background="@drawable/custom_button"
         android:id="@+id/impression_new_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/plan_new_button" />
+        android:text="@string/plan_new_button"
+        style="@style/caresnap_button" />
 
     <Button
         android:id="@+id/impression_index_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/plan_index_button" />
+        android:text="@string/plan_index_button"
+        android:background="@drawable/custom_button"
+        style="@style/caresnap_button" />
 
 </LinearLayout>
