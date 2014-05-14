@@ -26,7 +26,7 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
      * the standard prompt or nothing at all.
      * @param spinnerAdapter wrapped Adapter.
      * @param nothingSelectedLayout layout for nothing selected, perhaps
-     * you want text grayed out like a prompt...
+     * you want physician_name grayed out like a prompt...
      * @param context
      */
     public NothingSelectedSpinnerAdapter(
@@ -43,7 +43,7 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
      * have two 'Select' rows.
      * @param spinnerAdapter wrapped Adapter. Should probably return false for isEnabled(0)
      * @param nothingSelectedLayout layout for nothing selected, perhaps you want
-     * text grayed out like a prompt...
+     * physician_name grayed out like a prompt...
      * @param nothingSelectedDropdownLayout layout for your 'Select an Item...' in
      * the dropdown.
      * @param context

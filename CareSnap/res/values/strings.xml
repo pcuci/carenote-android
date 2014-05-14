@@ -14,15 +14,18 @@
     <string name="record_button">Record</string>
     <string name="save_note">Save Note</string>
     <string name="view">View Summaries</string>
-    <string name="title_activity_impression">Capture Impression/Plan</string>
+    <string name="title_activity_impression">Patient\'s Visits</string>
     <string name="date_time">Date Time</string>
     <string name="physician_label">Physician\'s name:</string>
-    <string name="title_activity_create_impression">Create New Impression Plan</string>
+    <string name="title_activity_create_impression">New Visit</string>
     <string name="clinic_label">Clinic name:</string>
     <string name="speciality_prompt">Choose Specialty</string>
     <string name="save_impression">Save</string>
     <string name="doctor_prompt">Select Physician</string>
-
+    <string name="action_new_visit">New Visit</string>
+    <string name="new_impression_note_title">New Impression</string>
+    <string name="username"> Patient X</string>
+    <string name="add_physician">Add New physician</string>
     <string-array name="specialties">
         <item>Choose Specialty</item>
         <item>General</item>

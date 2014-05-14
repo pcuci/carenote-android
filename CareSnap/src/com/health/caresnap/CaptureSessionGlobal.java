@@ -7,7 +7,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.health.caresnap.com.health.caresnap.model.Physician;
-import com.health.caresnap.com.health.caresnap.model.Plan;
+import com.health.caresnap.com.health.caresnap.model.Visit;
 import com.health.caresnap.com.health.caresnap.persistance.DatabaseHandler;
 
 public class CaptureSessionGlobal extends Application {
@@ -15,13 +15,14 @@ public class CaptureSessionGlobal extends Application {
     private DatabaseHandler databaseHandler;
 
     public enum CaptureSessionState {
-        STARTING,
+        STARTING_NEW_VISIT,
         PAUSED,
         RECORDING,
         FINISHED_RECORDING,
         STOPPED,
         FINISHED,
-        FINAL_SAVE
+        FINAL_SAVE,
+        VIEW_VISIT,
     }
 
     ;
@@ -37,16 +38,16 @@ public class CaptureSessionGlobal extends Application {
         Log.d(TAG, "SESSION STATE:" + sessionState);
     }
 
-    public void addPlan(Plan plan) {
-        databaseHandler.addPlan(plan);
+    public void addPlan(Visit visit) {
+        databaseHandler.addVisit(visit);
     }
 
     public void setupDatabase(Context context) {
         databaseHandler = new DatabaseHandler(context);
     }
 
-    public List<Plan> getAllPlans() {
-        return databaseHandler.getAllPlans();
+    public List<Visit> getAllVisits() {
+        return databaseHandler.getAllVisits();
     }
 
 

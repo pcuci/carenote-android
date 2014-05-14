@@ -12,7 +12,7 @@ import android.text.format.Time;
 import android.util.Log;
 
 import com.health.caresnap.com.health.caresnap.model.Physician;
-import com.health.caresnap.com.health.caresnap.model.Plan;
+import com.health.caresnap.com.health.caresnap.model.Visit;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -21,13 +21,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "snapCare";
+    private static final String DATABASE_NAME = "CareSnap";
 
     // Contacts table name
-    private static final String TABLE_PLANS = "Plans";
+    private static final String TABLE_VISITS = "Visits";
     private static final String TABLE_PHYSICIANS = "Physicians";
     private static final String KEY_PHYSICIAN_ID_STRING = "physician_id";
-    // Plans column names
+    // Visits column names
     private String TAG = "DATABASE";
 
     ;
@@ -36,102 +36,110 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    ;
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_PLANS_TABLE = "CREATE TABLE " + TABLE_PLANS
-                + "(" + PlanColumn.KEY_PLAN_ID + " integer PRIMARY KEY AUTOINCREMENT," + PlanColumn.KEY_PHYSICIAN_ID.toString() + " integer," + PlanColumn.KEY_LOCATION + " text not null," + PlanColumn.KEY_NOTE
-                + " text," + PlanColumn.KEY_TIME + " datetime" + ",FOREIGN KEY(" + PlanColumn.KEY_PHYSICIAN_ID + ") REFERENCES " + TABLE_PHYSICIANS + "(" + PlanColumn.KEY_PHYSICIAN_ID + "))";
-        String CREATE_DOCTORS_TABLE = "CREATE TABLE " + TABLE_PHYSICIANS + "(" + PhysicianColumn.KEY_PHYSICIAN + " integer PRIMARY KEY autoincrement," + PhysicianColumn.KEY_PHYSICIAN_NAME + " text,"
-                + PhysicianColumn.KEY_PHYSICIAN_SPECIALITY + " text" + ")";
+        String CREATE_VISITS_TABLE = "CREATE TABLE " + TABLE_VISITS
+                + "(" + VisitColumn.KEY_VISIT_ID + " integer PRIMARY KEY AUTOINCREMENT," +
+                VisitColumn.KEY_PHYSICIAN_ID.toString() + " integer," +
+                VisitColumn.KEY_LOCATION + " physician_name not null," +
+                VisitColumn.KEY_IMPRESSION_NOTE + " physician_name," +
+                VisitColumn.KEY_RESULTS_NOTE + " physician_name," +
+                VisitColumn.KEY_TESTS_NOTE + " physician_name," +
+                VisitColumn.KEY_TIME + " datetime" +
+                ",FOREIGN KEY(" + VisitColumn.KEY_PHYSICIAN_ID + ") REFERENCES " + TABLE_PHYSICIANS + "(" + VisitColumn.KEY_PHYSICIAN_ID + "))";
+
+        String CREATE_DOCTORS_TABLE = "CREATE TABLE " + TABLE_PHYSICIANS + "(" + PhysicianColumn.KEY_PHYSICIAN + " integer PRIMARY KEY autoincrement," +
+                PhysicianColumn.KEY_PHYSICIAN_NAME + " physician_name," +
+                PhysicianColumn.KEY_PHYSICIAN_SPECIALITY + " physician_name" + ")";
 
         db.execSQL(CREATE_DOCTORS_TABLE);
-        db.execSQL(CREATE_PLANS_TABLE);
+        db.execSQL(CREATE_VISITS_TABLE);
         Log.d(TAG, "Database created");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VISITS);
 
         onCreate(db);
     }
 
-    public void addPlan(Plan plan) {
+    public void addVisit(Visit visit) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(PlanColumn.KEY_PHYSICIAN_ID.toString(), plan.getPhysician().getPhysicianId());
-        values.put(PlanColumn.KEY_LOCATION.toString(), plan.getLocation());
-        values.put(PlanColumn.KEY_NOTE.toString(), plan.getNote());
-        values.put(PlanColumn.KEY_TIME.toString(), plan.getTime().format2445());
+        values.put(VisitColumn.KEY_PHYSICIAN_ID.toString(), visit.getPhysician().getPhysicianId());
+        values.put(VisitColumn.KEY_LOCATION.toString(), visit.getLocation());
+        values.put(VisitColumn.KEY_IMPRESSION_NOTE.toString(), visit.getImpressionNote());
+        values.put(VisitColumn.KEY_RESULTS_NOTE.toString(), visit.getResultsNote());
+        values.put(VisitColumn.KEY_TESTS_NOTE.toString(), visit.getTestsNote());
+        values.put(VisitColumn.KEY_TIME.toString(), visit.getTime().format2445());
 
-        db.insert(TABLE_PLANS, null, values);
+        db.insert(TABLE_VISITS, null, values);
         db.close();
     }
 
-    public Plan getPlan(int id) {
+    public Visit getVisit(int id) {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor planCursor = db.query(TABLE_PLANS, new String[]{PlanColumn.KEY_PLAN_ID.toString(),
-                PlanColumn.KEY_PHYSICIAN_ID.toString(), PlanColumn.KEY_LOCATION.toString(), PlanColumn.KEY_NOTE.toString(), PlanColumn.KEY_TIME.toString()},
-                PlanColumn.KEY_PLAN_ID.toString() + "=?", new String[]{String.valueOf(id)}, null, null,
+        Cursor cursor = db.query(TABLE_VISITS, new String[]{VisitColumn.KEY_VISIT_ID.toString(),
+                VisitColumn.KEY_PHYSICIAN_ID.toString(), VisitColumn.KEY_LOCATION.toString(), VisitColumn.KEY_IMPRESSION_NOTE.toString(), VisitColumn.KEY_RESULTS_NOTE.toString(), VisitColumn.KEY_TESTS_NOTE.toString(), VisitColumn.KEY_TIME.toString()},
+                VisitColumn.KEY_VISIT_ID.toString() + "=?", new String[]{String.valueOf(id)}, null, null,
                 null, null);
 
 
-        if (planCursor != null) {
-            planCursor.moveToFirst();
+        if (cursor != null) {
+            cursor.moveToFirst();
         }
 
-        int physicianId = Integer.parseInt(planCursor.getString(PlanColumn.KEY_PHYSICIAN_ID.ordinal()));
+        int physicianId = Integer.parseInt(cursor.getString(VisitColumn.KEY_PHYSICIAN_ID.ordinal()));
         Physician physician = getPhysician(physicianId);
 
-        Time timestamp = parseStringToTime(planCursor.getString(PlanColumn.KEY_TIME.ordinal()));
+        Time timestamp = parseStringToTime(cursor.getString(VisitColumn.KEY_TIME.ordinal()));
         Log.d(TAG, "time from db:" + timestamp.format("%c"));
 
-        Plan plan = new Plan(Integer.parseInt(planCursor
-                .getString(PlanColumn.KEY_PLAN_ID.ordinal())), physician, planCursor.getString(PlanColumn.KEY_LOCATION.ordinal()),
-                planCursor.getString(PlanColumn.KEY_NOTE.ordinal()), timestamp);
+        Visit visit = new Visit(Integer.parseInt(cursor
+                .getString(VisitColumn.KEY_VISIT_ID.ordinal())), physician, cursor.getString(VisitColumn.KEY_LOCATION.ordinal()),
+                cursor.getString(VisitColumn.KEY_IMPRESSION_NOTE.ordinal()), timestamp);
 
-        planCursor.close();
+        cursor.close();
         db.close();
-        return plan;
+        return visit;
     }
 
-    public List<Plan> getAllPlans() {
+    public List<Visit> getAllVisits() {
 
-        List<Plan> planList = new ArrayList<Plan>();
+        List<Visit> visitList = new ArrayList<Visit>();
 
-        String plansSelectQuery = "SELECT * FROM " + TABLE_PLANS;
+        String visitsSelectQuery = "SELECT * FROM " + TABLE_VISITS;
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor planCursor = db.rawQuery(plansSelectQuery, null);
+        Cursor cursor = db.rawQuery(visitsSelectQuery, null);
 
         // looping through all rows and adding to list
-        if (planCursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
-                int physicianId = Integer.parseInt(planCursor.getString(PlanColumn.KEY_PHYSICIAN_ID.ordinal()));
+                int physicianId = Integer.parseInt(cursor.getString(VisitColumn.KEY_PHYSICIAN_ID.ordinal()));
                 Physician physician = getPhysician(physicianId);
-                Time timestamp = parseStringToTime(planCursor.getString(PlanColumn.KEY_TIME.ordinal()));
+                Time timestamp = parseStringToTime(cursor.getString(VisitColumn.KEY_TIME.ordinal()));
                 Log.d(TAG, "time from db:" + timestamp.format("%c"));
-                Plan plan = new Plan(Integer.parseInt(planCursor
-                        .getString(PlanColumn.KEY_PLAN_ID.ordinal())), physician, planCursor.getString(PlanColumn.KEY_LOCATION.ordinal()),
-                        planCursor.getString(PlanColumn.KEY_NOTE.ordinal()), timestamp);
-                planList.add(plan);
-            } while (planCursor.moveToNext());
+                Visit visit = new Visit(Integer.parseInt(cursor
+                        .getString(VisitColumn.KEY_VISIT_ID.ordinal())), physician, cursor.getString(VisitColumn.KEY_LOCATION.ordinal()),
+                        cursor.getString(VisitColumn.KEY_IMPRESSION_NOTE.ordinal()), timestamp);
+                visitList.add(visit);
+            } while (cursor.moveToNext());
         }
 
-        planCursor.close();
+        cursor.close();
         db.close();
 
-        return planList;
+        return visitList;
     }
 
-    public int getPlansCount() {
+    public int getVisitsCount() {
 
-        String countQuery = "SELECT  * FROM " + TABLE_PLANS;
+        String countQuery = "SELECT  * FROM " + TABLE_VISITS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
@@ -139,24 +147,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    public int updatePlan(Plan plan) {
+    public int updateVisit(Visit visit) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(PlanColumn.KEY_PHYSICIAN_ID.toString(), plan.getPhysician().getPhysicianId());
-        values.put(PlanColumn.KEY_LOCATION.toString(), plan.getLocation());
-        values.put(PlanColumn.KEY_NOTE.toString(), plan.getNote());
-        values.put(PlanColumn.KEY_TIME.toString(), plan.getTime().format("%c"));
+        values.put(VisitColumn.KEY_PHYSICIAN_ID.toString(), visit.getPhysician().getPhysicianId());
+        values.put(VisitColumn.KEY_LOCATION.toString(), visit.getLocation());
+        values.put(VisitColumn.KEY_IMPRESSION_NOTE.toString(), visit.getImpressionNote());
+        values.put(VisitColumn.KEY_TIME.toString(), visit.getTime().format("%c"));
 
-        return db.update(TABLE_PLANS, values, PlanColumn.KEY_PLAN_ID.toString() + " = ?",
-                new String[]{String.valueOf(plan.getID())});
+        return db.update(TABLE_VISITS, values, VisitColumn.KEY_VISIT_ID.toString() + " = ?",
+                new String[]{String.valueOf(visit.getID())});
     }
 
-    public void deletePlan(Plan plan) {
+    public void deleteVisit(Visit visit) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PLANS, PlanColumn.KEY_PLAN_ID.toString() + " = ?",
-                new String[]{String.valueOf(plan.getID())});
+        db.delete(TABLE_VISITS, VisitColumn.KEY_VISIT_ID.toString() + " = ?",
+                new String[]{String.valueOf(visit.getID())});
         db.close();
     }
 
@@ -217,11 +225,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return timestamp;
     }
 
-    private enum PlanColumn {
-        KEY_PLAN_ID("plan_id"), KEY_PHYSICIAN_ID(KEY_PHYSICIAN_ID_STRING), KEY_LOCATION("plan_location"), KEY_NOTE("plane_note"), KEY_TIME("plan_time");
+    private enum VisitColumn {
+        KEY_VISIT_ID("visit_id"), KEY_PHYSICIAN_ID(KEY_PHYSICIAN_ID_STRING), KEY_LOCATION("location"), KEY_IMPRESSION_NOTE("impression_note"), KEY_RESULTS_NOTE("results_note"), KEY_TESTS_NOTE("tests_note"), KEY_TIME("visit_time");
         private String columnName;
 
-        private PlanColumn(String columnName) {
+        private VisitColumn(String columnName) {
             this.columnName = columnName;
         }
 
