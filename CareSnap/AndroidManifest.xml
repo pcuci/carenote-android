@@ -30,8 +30,17 @@
         </activity>
         <activity
             android:name=".com.health.caresnap.ui.NoteNewActivity"
-            android:label="@string/new_impression_note_title"
-            android:parentActivityName=".com.health.caresnap.ui.VisitNewActivity">
+            android:label="@string/new_note_title"
+            android:parentActivityName=".com.health.caresnap.ui.VisitViewNewActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.health.caresnap.ui.VisitNewActivity" />
+        </activity>
+        <activity
+            android:name=".com.health.caresnap.ui.NoteViewActivity"
+            android:label="@string/view_note_title"
+            android:parentActivityName=".com.health.caresnap.ui.VisitViewNewActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -41,7 +50,7 @@
             android:name=".com.health.caresnap.ui.VisitShowActivity"
             android:label="@string/title_activity_impression"></activity>
         <activity
-            android:name=".com.health.caresnap.ui.VisitNewActivity"
+            android:name=".com.health.caresnap.ui.VisitViewNewActivity"
             android:label="@string/title_activity_create_impression"
             android:parentActivityName=".com.health.caresnap.ui.VisitShowActivity">
             <meta-data

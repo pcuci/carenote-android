@@ -6,7 +6,7 @@
     android:padding="40dp"
     tools:context=".NoteNewActivity">
     <TextView
-        android:id="@+id/new_note_note_type"
+        android:id="@+id/view_note_note_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="70dp"
@@ -14,17 +14,17 @@
         android:textSize="20sp"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
     <TextView
-        android:id="@+id/note_label"
+        android:id="@+id/view_note_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:text="note"
         android:textSize="20sp"
-        android:layout_toEndOf="@+id/new_note_note_type"
+        android:layout_toEndOf="@+id/view_note_note_type"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <EditText
-        android:id="@+id/summary_text"
+    <TextView
+        android:id="@+id/view_note_summary_text"
         android:padding="10px"
         android:layout_width="fill_parent"
         android:layout_weight="1"
@@ -37,20 +37,11 @@
         android:hint="@string/record_edit_text"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@id/new_note_note_type">
+        android:layout_below="@id/view_note_note_type">
 
         <requestFocus />
-    </EditText>
+    </TextView>
 
-    <Button
-        android:id="@+id/new_note_record_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/record_small_ico"
-        android:text="@string/record_button"
-        android:background="@drawable/custom_button"
-        style="@style/caresnap_button"
-        android:layout_below="@id/summary_text"/>
 
 
 </RelativeLayout>

@@ -2,7 +2,6 @@ package com.health.caresnap.com.health.caresnap.ui;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,15 +9,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+import com.health.caresnap.CaptureSessionGlobal;
 import com.health.caresnap.R;
 
 public class VisitShowActivity extends Activity {
     private boolean doubleBackToExitPressedOnce = false;
+    private static CaptureSessionGlobal session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentManager fm = getFragmentManager();
-
         if (fm.findFragmentById(android.R.id.content) == null) {
             ViewPlansListFragment list = new ViewPlansListFragment();
             fm.beginTransaction().add(android.R.id.content, list).commit();
@@ -31,6 +32,7 @@ public class VisitShowActivity extends Activity {
         inflater.inflate(R.menu.mainmenu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
@@ -45,7 +47,8 @@ public class VisitShowActivity extends Activity {
 
     private void startNewVisitIntent() {
         Intent i = new Intent(getBaseContext(),
-                VisitNewActivity.class);
+                VisitViewNewActivity.class);
+        i.putExtra(IntentExtras.VISIT_TYPE.toString(), VisitViewNewActivity.Type.NEW.toString());
         startActivity(i);
     }
 
@@ -63,7 +66,7 @@ public class VisitShowActivity extends Activity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
 

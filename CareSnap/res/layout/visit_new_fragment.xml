@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:parentActivityName="com.health.caresnap.MainActivity"
+    tools:context="com.health.caresnap.com.health.caresnap.ui.VisitViewNewActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/physician_new_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle ="bold"
+            android:text="@string/visit_view_by"
+            android:id="@+id/visit_new_by"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:ems="10"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/doctor_prompt"
+            android:id="@+id/physiciansSpinner"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/visit_new_by"
+            android:textStyle ="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/physician_new_layout"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle ="bold"
+            android:text="@string/visit_view_at"
+            android:id="@+id/textView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/visit_view_clinic_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/visit_view_clinic_name"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:hint="Clinic Name"/>
+    </RelativeLayout>
+    <!--
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+
+<Button
+          android:id="@+id/note_new_button"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/note_new_button"
+          android:background="@drawable/custom_button"
+          style="@style/caresnap_button"/>
+
+      <Button
+          android:id="@+id/impression_new_save_button"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_centerHorizontal="true"
+          android:text="@string/plan_new_save_button"
+          android:background="@drawable/custom_button"
+          style="@style/caresnap_button" />
+  </LinearLayout>
+
+
+-->
+</LinearLayout>

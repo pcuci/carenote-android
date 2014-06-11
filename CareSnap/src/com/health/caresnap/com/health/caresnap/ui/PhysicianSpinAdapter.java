@@ -49,7 +49,7 @@ public class PhysicianSpinAdapter extends ArrayAdapter<Physician> {
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (User class)
         Physician physician = values[position];
-        label.setText(physician.getName() + "- " + physician.getSpeciality());
+        label.setText(physician.getFirstName() + physician.getLastName() + " (" + physician.getSpeciality() + ")");
         // And finally return your dynamic (or custom) view for each spinner item
         return label;
     }
@@ -62,7 +62,7 @@ public class PhysicianSpinAdapter extends ArrayAdapter<Physician> {
         TextView label = new TextView(context);
         label.setTextColor(Color.BLACK);
         Physician physician = values[position];
-        label.setText(physician.getName() + "- " + physician.getSpeciality());
+        label.setText(physician.getFirstName() + physician.getLastName() + " (" + physician.getSpeciality() + ")");
         return label;
     }
 }

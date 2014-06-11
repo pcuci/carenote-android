@@ -27,6 +27,7 @@ public class CaptureSessionGlobal extends Application {
 
     ;
 
+
     private CaptureSessionState sessionState = CaptureSessionState.STOPPED;
 
     public CaptureSessionState getSessionState() {

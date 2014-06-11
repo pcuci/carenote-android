@@ -4,18 +4,9 @@
     android:layout_height="fill_parent"
     android:padding="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name:"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle ="bold"/>
+
     <EditText
-        android:id="@+id/add_practitioner_name_textView"
+        android:id="@+id/add_practitioner_first_name_textView"
         android:layout_width="fill_parent"
         android:layout_height="80px"
         android:textColor="#000"
@@ -23,7 +14,17 @@
         android:inputType="textPersonName"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView"/>
+        android:hint="First Name"/>
+    <EditText
+        android:id="@+id/add_practitioner_last_name_textView"
+        android:layout_width="fill_parent"
+        android:layout_height="80px"
+        android:textColor="#000"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/add_practitioner_first_name_textView"
+        android:hint="Last Name"/>
 
     <Spinner
         android:id="@+id/speciality_spinner"
@@ -32,7 +33,7 @@
         android:entries="@array/specialties"
         android:prompt="@string/speciality_prompt"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@+id/add_practitioner_name_textView"
+        android:layout_below="@+id/add_practitioner_last_name_textView"
         android:textStyle ="bold"/>
     <Button
         android:id="@+id/dialog_add_button"

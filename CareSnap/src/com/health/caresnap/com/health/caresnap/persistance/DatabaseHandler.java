@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.format.Time;
 import android.util.Log;
 
+import com.health.caresnap.com.health.caresnap.model.Note;
+import com.health.caresnap.com.health.caresnap.model.NoteType;
 import com.health.caresnap.com.health.caresnap.model.Physician;
 import com.health.caresnap.com.health.caresnap.model.Visit;
 
@@ -30,27 +32,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Visits column names
     private String TAG = "DATABASE";
 
-    ;
 
+    public static DatabaseHandler newInstance(Context context) {
+        return new DatabaseHandler(context);
+    }
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String CREATE_DOCTORS_TABLE = "CREATE TABLE " + TABLE_PHYSICIANS + "(" + PhysicianColumn.KEY_PHYSICIAN + " integer PRIMARY KEY autoincrement," +
+                PhysicianColumn.KEY_PHYSICIAN_FIRST_NAME.toString() + " VARCHAR(255) not null," +
+                PhysicianColumn.KEY_PHYSICIAN_LAST_NAME.toString() + " VARCHAR(255) not null," +
+                PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.toString() + " VARCHAR(255) not null" + ")";
+
         String CREATE_VISITS_TABLE = "CREATE TABLE " + TABLE_VISITS
                 + "(" + VisitColumn.KEY_VISIT_ID + " integer PRIMARY KEY AUTOINCREMENT," +
                 VisitColumn.KEY_PHYSICIAN_ID.toString() + " integer," +
-                VisitColumn.KEY_LOCATION + " physician_name not null," +
-                VisitColumn.KEY_IMPRESSION_NOTE + " physician_name," +
-                VisitColumn.KEY_RESULTS_NOTE + " physician_name," +
-                VisitColumn.KEY_TESTS_NOTE + " physician_name," +
-                VisitColumn.KEY_TIME + " datetime" +
+                VisitColumn.KEY_LOCATION.toString() + " VARCHAR(255) not null," +
+                VisitColumn.KEY_IMPRESSION_NOTE.toString() + " VARCHAR(255)," +
+                VisitColumn.KEY_RESULTS_NOTE.toString() + " VARCHAR(255)," +
+                VisitColumn.KEY_TESTS_NOTE.toString() + " VARCHAR(255)," +
+                VisitColumn.KEY_TIME.toString() + " datetime not null" +
                 ",FOREIGN KEY(" + VisitColumn.KEY_PHYSICIAN_ID + ") REFERENCES " + TABLE_PHYSICIANS + "(" + VisitColumn.KEY_PHYSICIAN_ID + "))";
-
-        String CREATE_DOCTORS_TABLE = "CREATE TABLE " + TABLE_PHYSICIANS + "(" + PhysicianColumn.KEY_PHYSICIAN + " integer PRIMARY KEY autoincrement," +
-                PhysicianColumn.KEY_PHYSICIAN_NAME + " physician_name," +
-                PhysicianColumn.KEY_PHYSICIAN_SPECIALITY + " physician_name" + ")";
 
         db.execSQL(CREATE_DOCTORS_TABLE);
         db.execSQL(CREATE_VISITS_TABLE);
@@ -70,9 +75,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(VisitColumn.KEY_PHYSICIAN_ID.toString(), visit.getPhysician().getPhysicianId());
         values.put(VisitColumn.KEY_LOCATION.toString(), visit.getLocation());
-        values.put(VisitColumn.KEY_IMPRESSION_NOTE.toString(), visit.getImpressionNote());
-        values.put(VisitColumn.KEY_RESULTS_NOTE.toString(), visit.getResultsNote());
-        values.put(VisitColumn.KEY_TESTS_NOTE.toString(), visit.getTestsNote());
+        values.put(VisitColumn.KEY_IMPRESSION_NOTE.toString(), visit.getImpressionNote().getText());
+        values.put(VisitColumn.KEY_RESULTS_NOTE.toString(), visit.getResultsNote().getText());
+        values.put(VisitColumn.KEY_TESTS_NOTE.toString(), visit.getTestsNote().getText());
         values.put(VisitColumn.KEY_TIME.toString(), visit.getTime().format2445());
 
         db.insert(TABLE_VISITS, null, values);
@@ -99,9 +104,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Time timestamp = parseStringToTime(cursor.getString(VisitColumn.KEY_TIME.ordinal()));
         Log.d(TAG, "time from db:" + timestamp.format("%c"));
 
+        Note impressionNote = new Note(NoteType.IMPRESSION, cursor.getString(VisitColumn.KEY_IMPRESSION_NOTE.ordinal()), true);
+        Note resultsNote = new Note(NoteType.IMPRESSION, cursor.getString(VisitColumn.KEY_RESULTS_NOTE.ordinal()), true);
+        Note testsNote = new Note(NoteType.IMPRESSION, cursor.getString(VisitColumn.KEY_TESTS_NOTE.ordinal()), true);
+
         Visit visit = new Visit(Integer.parseInt(cursor
                 .getString(VisitColumn.KEY_VISIT_ID.ordinal())), physician, cursor.getString(VisitColumn.KEY_LOCATION.ordinal()),
-                cursor.getString(VisitColumn.KEY_IMPRESSION_NOTE.ordinal()), timestamp);
+                impressionNote, resultsNote, testsNote, timestamp, true);
 
         cursor.close();
         db.close();
@@ -123,10 +132,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 int physicianId = Integer.parseInt(cursor.getString(VisitColumn.KEY_PHYSICIAN_ID.ordinal()));
                 Physician physician = getPhysician(physicianId);
                 Time timestamp = parseStringToTime(cursor.getString(VisitColumn.KEY_TIME.ordinal()));
+                Note impressionNote = new Note(NoteType.IMPRESSION, cursor.getString(VisitColumn.KEY_IMPRESSION_NOTE.ordinal()), true);
+                Note resultsNote = new Note(NoteType.RESULTS, cursor.getString(VisitColumn.KEY_RESULTS_NOTE.ordinal()), true);
+                Note testsNote = new Note(NoteType.TESTS, cursor.getString(VisitColumn.KEY_TESTS_NOTE.ordinal()), true);
+
                 Log.d(TAG, "time from db:" + timestamp.format("%c"));
                 Visit visit = new Visit(Integer.parseInt(cursor
                         .getString(VisitColumn.KEY_VISIT_ID.ordinal())), physician, cursor.getString(VisitColumn.KEY_LOCATION.ordinal()),
-                        cursor.getString(VisitColumn.KEY_IMPRESSION_NOTE.ordinal()), timestamp);
+                        impressionNote,resultsNote, testsNote, timestamp,true);
                 visitList.add(visit);
             } while (cursor.moveToNext());
         }
@@ -154,7 +167,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(VisitColumn.KEY_PHYSICIAN_ID.toString(), visit.getPhysician().getPhysicianId());
         values.put(VisitColumn.KEY_LOCATION.toString(), visit.getLocation());
-        values.put(VisitColumn.KEY_IMPRESSION_NOTE.toString(), visit.getImpressionNote());
+        values.put(VisitColumn.KEY_IMPRESSION_NOTE.toString(), visit.getImpressionNote().getText());
+        values.put(VisitColumn.KEY_TESTS_NOTE.toString(), visit.getTestsNote().getText());
+        values.put(VisitColumn.KEY_RESULTS_NOTE.toString(), visit.getResultsNote().getText());
         values.put(VisitColumn.KEY_TIME.toString(), visit.getTime().format("%c"));
 
         return db.update(TABLE_VISITS, values, VisitColumn.KEY_VISIT_ID.toString() + " = ?",
@@ -172,14 +187,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor physicianCursor = db.query(TABLE_PHYSICIANS, new String[]{PhysicianColumn.KEY_PHYSICIAN.toString(),
-                PhysicianColumn.KEY_PHYSICIAN_NAME.toString(), PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.toString()},
+                PhysicianColumn.KEY_PHYSICIAN_FIRST_NAME.toString(),PhysicianColumn.KEY_PHYSICIAN_LAST_NAME.toString(), PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.toString()},
                 PhysicianColumn.KEY_PHYSICIAN.toString() + "=?", new String[]{String.valueOf(physicianId)}, null, null,
                 null, null);
 
         if (physicianCursor != null)
             physicianCursor.moveToFirst();
 
-        Physician physician = new Physician(Integer.parseInt(physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN.ordinal())), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_NAME.ordinal()), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.ordinal()));
+        Physician physician = new Physician(Integer.parseInt(physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN.ordinal())), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_FIRST_NAME.ordinal()), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_LAST_NAME.ordinal()),physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.ordinal()));
 
         physicianCursor.close();
         db.close();
@@ -190,7 +205,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(PhysicianColumn.KEY_PHYSICIAN_NAME.toString(), physician.getName());
+        values.put(PhysicianColumn.KEY_PHYSICIAN_FIRST_NAME.toString(), physician.getFirstName());
+        values.put(PhysicianColumn.KEY_PHYSICIAN_LAST_NAME.toString(), physician.getLastName());
         values.put(PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.toString(), physician.getSpeciality());
 
         db.insert(TABLE_PHYSICIANS, null, values);
@@ -208,7 +224,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (physicianCursor.moveToFirst()) {
             do {
-                Physician physician = new Physician(Integer.parseInt(physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN.ordinal())), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_NAME.ordinal()), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.ordinal()));
+                Physician physician = new Physician(Integer.parseInt(physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN.ordinal())), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_FIRST_NAME.ordinal()), physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_LAST_NAME.ordinal()),physicianCursor.getString(PhysicianColumn.KEY_PHYSICIAN_SPECIALITY.ordinal()));
                 physicianList.add(physician);
             } while (physicianCursor.moveToNext());
         }
@@ -240,7 +256,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     private enum PhysicianColumn {
-        KEY_PHYSICIAN(KEY_PHYSICIAN_ID_STRING), KEY_PHYSICIAN_NAME("physician_name"), KEY_PHYSICIAN_SPECIALITY("physician_speciality");
+        KEY_PHYSICIAN(KEY_PHYSICIAN_ID_STRING), KEY_PHYSICIAN_FIRST_NAME("physician_first_name"), KEY_PHYSICIAN_LAST_NAME("physician_last_name"), KEY_PHYSICIAN_SPECIALITY("physician_speciality");
         private String columnName;
 
         private PhysicianColumn(String columnName) {

@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/action_confirm_save"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/confirm_save"
+        android:title="@string/confirm_save"/>
+    <item
         android:id="@+id/action_new_physician"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"

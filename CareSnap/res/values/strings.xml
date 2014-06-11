@@ -12,7 +12,7 @@
     <string name="capture">New Summary</string>
     <string name="record_edit_text">Type or voice-record visit summary</string>
     <string name="record_button">Record</string>
-    <string name="save_note">Save Note</string>
+    <string name="save_note">Save</string>
     <string name="view">View Summaries</string>
     <string name="title_activity_impression">Patient\'s Visits</string>
     <string name="date_time">Date Time</string>
@@ -23,9 +23,14 @@
     <string name="save_impression">Save</string>
     <string name="doctor_prompt">Select Physician</string>
     <string name="action_new_visit">New Visit</string>
-    <string name="new_impression_note_title">New Impression</string>
+    <string name="new_note_title">New Note</string>
+    <string name="view_note_title">View Note</string>
     <string name="username"> Patient X</string>
     <string name="add_physician">Add New physician</string>
+    <string name="visit_view_by">by:</string>
+    <string name="visit_view_at">at:</string>
+    <string name="visit_view_seen_on">seen on:</string>
+    <string name="confirm_save">Save</string>
     <string-array name="specialties">
         <item>Choose Specialty</item>
         <item>General</item>
@@ -39,6 +44,5 @@
         <item>Physiotherapy</item>
         <item>Dermatology</item>
     </string-array>
-    <string name="clinic_name_label">Clinic name:</string>
 
 </resources>

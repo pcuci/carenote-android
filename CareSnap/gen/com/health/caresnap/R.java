@@ -32,7 +32,7 @@ public final class R {
         public static final int action_settings=0x7f050012;
         public static final int button_capture_main=0x7f050000;
         public static final int button_view_main=0x7f050001;
-        public static final int clinic_name=0x7f050009;
+        public static final int visit_view_clinic_name =0x7f050009;
         public static final int clinic_name_label=0x7f050008;
         public static final int date_time_textview=0x7f050002;
         public static final int doctor_name=0x7f050006;
@@ -42,7 +42,7 @@ public final class R {
         public static final int impression_new_save_button=0x7f05000b;
         public static final int listView1=0x7f050004;
         public static final int note_new_button=0x7f05000a;
-        public static final int record_button=0x7f050010;
+        public static final int new_note_record_button =0x7f050010;
         public static final int save_capture_button=0x7f050011;
         public static final int speciality_spinner=0x7f050007;
         public static final int summary_text=0x7f05000f;
@@ -51,7 +51,7 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_plan_index =0x7f030000;
-        public static final int activity_visit_new =0x7f030001;
+        public static final int activity_visit_view_new =0x7f030001;
         public static final int activity_visit_show =0x7f030002;
         public static final int activity_main=0x7f030003;
         public static final int activity_note_new=0x7f030004;

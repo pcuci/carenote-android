@@ -42,7 +42,7 @@ used to endorse or promote products or services derived from this source
 without express written permission from Vanderbilt University or
 University of Maryland. This license grants no permission to call
 products or services derived from the iRemember source, nor does it
-grant permission for the name Vanderbilt University or
+grant permission for the firstName Vanderbilt University or
 University of Maryland to appear in their names.
   -->
 
@@ -60,6 +60,15 @@ University of Maryland to appear in their names.
         android:text="Note_type"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/note_text_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="text preview"
+        android:textStyle="bold"
+        android:layout_below="@+id/note_record_image_view"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:id="@+id/note_record_image_view"
@@ -69,5 +78,6 @@ University of Maryland to appear in their names.
         android:layout_alignParentRight="true"
         android:paddingLeft="20dp"
         android:src="@drawable/record_small_ico"
-        android:layout_alignRight="@id/note_type" />
+        android:layout_alignRight="@id/note_type"
+        android:visibility="invisible" />
 </RelativeLayout>

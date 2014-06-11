@@ -1,7 +1,5 @@
 package com.health.caresnap.com.health.caresnap.ui;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +12,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.health.caresnap.CaptureSessionGlobal;
 import com.health.caresnap.CaptureSessionGlobal.CaptureSessionState;
 import com.health.caresnap.R;
 import com.health.caresnap.com.health.caresnap.model.Note;
 
-public class NoteNewActivity extends Activity implements OnClickListener {
+import java.util.ArrayList;
+
+public class NoteViewActivity extends Activity {
 
     protected static final int REQUEST_OK = 1;
     protected String noteText;
@@ -31,37 +30,18 @@ public class NoteNewActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_new);
-        findViewById(R.id.new_note_record_button).setOnClickListener(this);
-        noteTypeTV = (TextView) findViewById(R.id.new_note_note_type);
+        setContentView(R.layout.activity_note_view);
+        noteTypeTV = (TextView) findViewById(R.id.view_note_note_type);
 
-        text = ((TextView) findViewById(R.id.summary_text));
+        text = ((TextView) findViewById(R.id.view_note_summary_text));
         Bundle extras = getIntent().getExtras();
         note = (Note) extras.get(IntentExtras.NOTE.toString());
         noteTypeTV.setText(note.getType().toString());
+        text.setText(note.getText() != null ? note.getText() : "No recording");
         getActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
-        try {
-            startActivityForResult(i, REQUEST_OK);
-            updateSessionState(CaptureSessionState.RECORDING);
-        } catch (Exception e) {
-            Toast.makeText(this, "Error initializing speech to physician_first_name engine.",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.new_note, menu);
-        return true;
-    }
 
     @Override
     public void onBackPressed() {
@@ -94,12 +74,8 @@ public class NoteNewActivity extends Activity implements OnClickListener {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 updateSessionState(CaptureSessionState.STOPPED);
-                Toast.makeText(getBaseContext(), "Note cancelled.", Toast.LENGTH_SHORT).show();
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
-            case R.id.save_capture_button:
-                saveNote();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }

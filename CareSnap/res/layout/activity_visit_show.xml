@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="10dp"
-    android:textSize="20sp" >
+    android:textSize="20sp"
+    android:background="@drawable/list_view_borders">
 
 </TextView>

@@ -13,6 +13,7 @@ public class CareSnapSplashScreen extends Activity {
     private static int SPLASH_TIME_OUT = 3000;
     private boolean isDbCreated = false;
 
+    // Calling Application class (see application tag in AndroidManifest.xml)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

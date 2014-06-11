@@ -46,7 +46,7 @@
     </style>
 
     <style name="PopupMenu.Caresnaptheme" parent="@android:style/Widget.Holo.Light.ListPopupWindow">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_caresnaptheme</item>	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_caresnaptheme</item>
     </style>
 
     <style name="DropDownListView.Caresnaptheme" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
@@ -90,5 +90,10 @@
         <item name="android:shadowDx" >1</item>
         <item name="android:shadowDy" >1</item>
         <item name="android:shadowRadius" >2</item>
+    </style>
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 </resources>

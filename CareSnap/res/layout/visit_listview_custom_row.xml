@@ -42,14 +42,15 @@ used to endorse or promote products or services derived from this source
 without express written permission from Vanderbilt University or
 University of Maryland. This license grants no permission to call
 products or services derived from the iRemember source, nor does it
-grant permission for the name Vanderbilt University or
+grant permission for the firstName Vanderbilt University or
 University of Maryland to appear in their names.
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/list_view_borders">
 
     <TextView
         android:id="@+id/visit_listview_custom_row_KEY_ID_textView"
@@ -61,33 +62,42 @@ University of Maryland to appear in their names.
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/visit_listview_custom_row_physician_textView"
+        android:id="@+id/visit_listview_custom_row_physician_fname_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
-        android:text="physician"
+        android:text="physician_fname"
         android:textSize="16sp"
-        android:layout_below="@+id/visit_listview_custom_row_KEY_ID_textView"/>
+        android:layout_below="@+id/visit_listview_custom_row_KEY_ID_textView" />
+    <TextView
+        android:id="@+id/visit_listview_custom_row_physician_lname_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="physician_lname"
+        android:textSize="16sp"
+        android:layout_toEndOf="@+id/visit_listview_custom_row_physician_fname_textView"
+        android:layout_below="@+id/visit_listview_custom_row_KEY_ID_textView" />
 
     <TextView
         android:id="@+id/visit_listview_custom_dash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:paddingLeft="5dp"
         android:text="-"
         android:textSize="16sp"
-        android:layout_toEndOf="@+id/visit_listview_custom_row_physician_textView"
-        android:layout_below="@+id/visit_listview_custom_row_creation_time_textView"/>
+        android:layout_toEndOf="@+id/visit_listview_custom_row_physician_lname_textView"
+        android:layout_below="@+id/visit_listview_custom_row_creation_time_textView" />
 
     <TextView
         android:id="@+id/visit_listview_custom_row_physician_speciality_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:paddingLeft="5dp"
         android:text="speciality"
         android:textSize="16sp"
         android:layout_toEndOf="@+id/visit_listview_custom_dash"
-        android:layout_below="@+id/visit_listview_custom_row_creation_time_textView"/>
+        android:layout_below="@+id/visit_listview_custom_row_creation_time_textView" />
 
     <TextView
         android:id="@+id/visit_listview_custom_row_creation_time_textView"
@@ -99,4 +109,98 @@ University of Maryland to appear in their names.
         android:text="creation_time"
         android:textSize="16sp"
         android:layout_alignRight="@id/visit_listview_custom_row_KEY_ID_textView" />
+
+    <View
+        android:id="@+id/separator_1"
+        style="@style/Divider"
+        android:layout_below="@+id/visit_listview_custom_row_physician_fname_textView" />
+
+    <TextView
+        android:id="@+id/visit_impression_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="20dp"
+        android:text="Impression:"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@+id/visit_listview_custom_row_physician_fname_textView" />
+
+    <TextView
+        android:id="@+id/visit_view_impression_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="20dp"
+        android:text="impression_text"
+        android:layout_toEndOf="@+id/visit_impression_label"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@+id/visit_listview_custom_row_physician_fname_textView" />
+
+    <View
+        android:id="@+id/separator_2"
+        style="@style/Divider"
+        android:layout_below="@+id/visit_view_impression_text" />
+
+    <TextView
+        android:id="@+id/visit_results_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="20dp"
+        android:text="Results:"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@+id/separator_2" />
+
+    <TextView
+        android:id="@+id/visit_view_results_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="45dp"
+        android:text="results_text"
+        android:layout_toEndOf="@+id/visit_results_label"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@+id/separator_2" />
+
+    <View
+        android:id="@+id/separator_3"
+        style="@style/Divider"
+        android:layout_below="@+id/visit_view_results_text" />
+
+    <TextView
+        android:id="@+id/visit_tests_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="20dp"
+        android:text="Tests:"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@+id/separator_3" />
+
+    <TextView
+        android:id="@+id/visit_view_tests_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="60dp"
+        android:text="tests_text"
+        android:layout_toEndOf="@+id/visit_tests_label"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@+id/separator_3" />
+
+    <View
+        android:id="@+id/separator_4"
+        style="@style/Divider"
+        android:layout_below="@+id/visit_view_tests_text" />
+    <View
+        android:id="@+id/separator_5"
+        style="@style/Divider"
+        android:layout_below="@+id/separator_4" />
+
 </RelativeLayout>

@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_new_container_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context="com.health.caresnap.com.health.caresnap.ui.VisitViewNewActivity">
+    <RelativeLayout
+        android:id="@+id/view_new_visit_info"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <TextView
+            android:id="@+id/usernameId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/username"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:textStyle ="bold"/>
+        <TextView
+            android:id="@+id/seenOnTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/visit_view_seen_on"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/usernameId"
+            android:textStyle ="bold"/>
+        <TextView
+            android:id="@id/date_time_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/date_time"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center"
+            android:layout_below="@id/seenOnTV"
+            android:gravity="center_horizontal"
+            android:textStyle ="bold"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/view_new_top_part"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/view_new_visit_info">
+   </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/view_new_bottom_part"
+        android:layout_width="match_parent"
+
+        android:layout_height="270dp"
+        android:layout_below="@id/view_new_top_part">
+
+    </RelativeLayout>
+
+</RelativeLayout>

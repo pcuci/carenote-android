@@ -1,18 +1,22 @@
 package com.health.caresnap.com.health.caresnap.model;
 
-public class Physician {
+import java.io.Serializable;
+
+public class Physician implements Serializable{
     private int physicianId;
     private String speciality;
-    private String name;
+    private String firstName;
+    private String lastName;
 
-    public Physician(int physicianId, String name, String speciality) {
+    public Physician(int physicianId, String firstName, String lastName, String speciality) {
         this.physicianId = physicianId;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.speciality = speciality;
     }
 
-    public Physician(String name, String speciality) {
-        this(-1, name, speciality);
+    public Physician(String firstName, String lastName, String speciality) {
+        this(-1, firstName, lastName, speciality);
     }
 
     public int getPhysicianId() {
@@ -31,11 +35,14 @@ public class Physician {
         this.speciality = speciality;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLastName() {
+        return lastName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 }
